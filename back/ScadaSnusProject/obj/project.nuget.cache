@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "CHcetsI9rWak248li/49CXv/NxY5QTIJF/ifgWJsh2WeS2lZGNny6GdZiP03WB1+pYdxj6UR9/LYKra8dD7s/A==",
+  "dgSpecHash": "VLKbqdgGCizV6/uipWxyox4wb00YKuBsr4hjGtEQMPxpKw+mUDJokRMjCMuwv/8bSQlhO7eE0LHAY7Q4Fb9G/g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\filip\\Documents\\GitHub\\ScadaSnusProject\\backend\\ScadaSnusProject\\ScadaSnusProject.csproj",
+  "projectFilePath": "C:\\Users\\filip\\Documents\\GitHub\\SCADA_project\\back\\ScadaSnusProject\\ScadaSnusProject.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\filip\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\filip\\.nuget\\packages\\microsoft.aspnetcore.diagnostics.entityframeworkcore\\6.0.0\\microsoft.aspnetcore.diagnostics.entityframeworkcore.6.0.0.nupkg.sha512",
