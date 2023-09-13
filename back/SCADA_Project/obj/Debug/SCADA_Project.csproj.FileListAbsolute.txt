@@ -1,0 +1,7 @@
+C:\Users\filip\Documents\GitHub\SCADA_project\back\SCADA_Project\bin\SCADA_Project.dll.config
+C:\Users\filip\Documents\GitHub\SCADA_project\back\SCADA_Project\bin\SCADA_Project.dll
+C:\Users\filip\Documents\GitHub\SCADA_project\back\SCADA_Project\bin\SCADA_Project.pdb
+C:\Users\filip\Documents\GitHub\SCADA_project\back\SCADA_Project\obj\Debug\SCADA_Project.csproj.AssemblyReference.cache
+C:\Users\filip\Documents\GitHub\SCADA_project\back\SCADA_Project\obj\Debug\SCADA_Project.csproj.CoreCompileInputs.cache
+C:\Users\filip\Documents\GitHub\SCADA_project\back\SCADA_Project\obj\Debug\SCADA_Project.dll
+C:\Users\filip\Documents\GitHub\SCADA_project\back\SCADA_Project\obj\Debug\SCADA_Project.pdb
