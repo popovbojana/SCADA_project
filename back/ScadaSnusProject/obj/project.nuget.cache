@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "i7G9MfxB34HjPPWJ4LBwDvz4o37YNLgC2CmgQyk/5dFGsokS5O6PACm7FtWCQ6ViNOMN34kL+arzUo46y/Vc2Q==",
+  "dgSpecHash": "ZUcoT6lImoVRRL7DKvPwty27d2qgjf6goplALCxzxzwYDLa7CmgLd/7VIFEvFY5xa5SPKoQ0khBBugcRqBpong==",
   "success": true,
-  "projectFilePath": "C:\\Users\\filip\\Documents\\ScadaSnusProject\\ScadaSnusProject.csproj",
+  "projectFilePath": "C:\\Users\\filip\\Documents\\GitHub\\SCADA_project\\back\\ScadaSnusProject\\ScadaSnusProject.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\filip\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
     "C:\\Users\\filip\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
