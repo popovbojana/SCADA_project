@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScadaSnusProject", "ScadaSnusProject.csproj", "{B1B75FF2-C6E7-4C90-921E-656146FCEA1C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScadaSnusProject", "ScadaSnusProject.csproj", "{8889D01E-727F-47EE-BFF9-0D2A3E9EAC77}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B1B75FF2-C6E7-4C90-921E-656146FCEA1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B1B75FF2-C6E7-4C90-921E-656146FCEA1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B1B75FF2-C6E7-4C90-921E-656146FCEA1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B1B75FF2-C6E7-4C90-921E-656146FCEA1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8889D01E-727F-47EE-BFF9-0D2A3E9EAC77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8889D01E-727F-47EE-BFF9-0D2A3E9EAC77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8889D01E-727F-47EE-BFF9-0D2A3E9EAC77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8889D01E-727F-47EE-BFF9-0D2A3E9EAC77}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {23AAC98C-8E24-44BB-B2EE-A80192D40ADD}
+		SolutionGuid = {3A52425E-90BA-4F98-A5CF-372A6966DB29}
 	EndGlobalSection
 EndGlobal

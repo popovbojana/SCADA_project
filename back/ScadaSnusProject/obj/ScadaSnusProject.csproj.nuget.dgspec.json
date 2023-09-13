@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\filip\\Documents\\GitHub\\SCADA_project\\back\\ScadaSnusProject\\ScadaSnusProject.csproj": {}
+    "C:\\Users\\filip\\Documents\\GitHub\\ScadaSnusProject\\backend\\ScadaSnusProject\\ScadaSnusProject.csproj": {}
   },
   "projects": {
-    "C:\\Users\\filip\\Documents\\GitHub\\SCADA_project\\back\\ScadaSnusProject\\ScadaSnusProject.csproj": {
+    "C:\\Users\\filip\\Documents\\GitHub\\ScadaSnusProject\\backend\\ScadaSnusProject\\ScadaSnusProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\filip\\Documents\\GitHub\\SCADA_project\\back\\ScadaSnusProject\\ScadaSnusProject.csproj",
+        "projectUniqueName": "C:\\Users\\filip\\Documents\\GitHub\\ScadaSnusProject\\backend\\ScadaSnusProject\\ScadaSnusProject.csproj",
         "projectName": "ScadaSnusProject",
-        "projectPath": "C:\\Users\\filip\\Documents\\GitHub\\SCADA_project\\back\\ScadaSnusProject\\ScadaSnusProject.csproj",
+        "projectPath": "C:\\Users\\filip\\Documents\\GitHub\\ScadaSnusProject\\backend\\ScadaSnusProject\\ScadaSnusProject.csproj",
         "packagesPath": "C:\\Users\\filip\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\filip\\Documents\\GitHub\\SCADA_project\\back\\ScadaSnusProject\\obj\\",
+        "outputPath": "C:\\Users\\filip\\Documents\\GitHub\\ScadaSnusProject\\backend\\ScadaSnusProject\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\filip\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -40,10 +40,6 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
-            "EntityFramework": {
-              "target": "Package",
-              "version": "[6.4.4, )"
-            },
             "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
               "target": "Package",
               "version": "[6.0.0, )"

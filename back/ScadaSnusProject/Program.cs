@@ -43,7 +43,7 @@ using (var scope = app.Services.CreateScope())
         Name = "John",
         Surname = "Doe",
         Username = "johndoe",
-        Password = "password123" 
+        Password = "password123"
     };
 
     dbContext.Users.Add(newUser);
@@ -56,3 +56,4 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
+app.Run();
