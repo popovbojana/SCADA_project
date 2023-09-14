@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 
 namespace ScadaSnusProject.Model
 {
@@ -11,7 +10,5 @@ namespace ScadaSnusProject.Model
         public double HighLimit { get; set; }
         public string Unit { get; set; }
 
-        public virtual ICollection<Alarm> Alarms { get; set; } = new List<Alarm>();
     }
-    
 }

@@ -1,6 +1,5 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using SCADA_Project.Model;
 
 namespace ScadaSnusProject.Model
 {
@@ -17,7 +16,7 @@ namespace ScadaSnusProject.Model
         HIGHER
     }
 
-    public class Alarm : IBaseEntity
+    public class Alarm
     {
         public Guid Id { get; set; }
         public double Value { get; set; }

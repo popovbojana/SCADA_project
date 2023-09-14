@@ -1,10 +1,9 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using SCADA_Project.Model;
 
 namespace ScadaSnusProject.Model
 {
-    public class AlarmRecord : IBaseEntity
+    public class AlarmRecord
 
     {
     public Guid Id{ get; set; }

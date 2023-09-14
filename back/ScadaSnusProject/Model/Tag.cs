@@ -1,12 +1,11 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using SCADA_Project.Model;
 
 namespace ScadaSnusProject.Model
 {
-    public class Tag : IBaseEntity
+    public class Tag
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string IOAddress { get; set; }

@@ -45,11 +45,28 @@ using (var scope = app.Services.CreateScope())
         Username = "johndoe",
         Password = "password123"
     };
+    
 
+    var newTag = new Tag
+    {
+        Name = "Tag",
+        Description = "Ovo je tag",
+        IOAddress = "Neka adresa",
+        Value = 10.000,
+        isDeleted = true
+    };
+
+    dbContext.Tags.Add(newTag);
     dbContext.Users.Add(newUser);
     dbContext.SaveChanges();
 
     var users = dbContext.Users.ToList();
+    foreach (var user in users)
+    {
+        Console.WriteLine($"Id: {user.Id}, Name: {user.Name}, Surname: {user.Surname}, Username: {user.Username}, Password: {user.Password}");
+    }
+    
+    var tags = dbContext.Tags.ToList();
     foreach (var user in users)
     {
         Console.WriteLine($"Id: {user.Id}, Name: {user.Name}, Surname: {user.Surname}, Username: {user.Username}, Password: {user.Password}");
