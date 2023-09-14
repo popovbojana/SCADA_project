@@ -18,6 +18,7 @@ namespace ScadaSnusProject.Model
 
     public class Alarm
     {
+        [Key]
         public int Id { get; set; }
         public double Value { get; set; }
         public int TagId { get; set; }

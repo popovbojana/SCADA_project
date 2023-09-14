@@ -22,19 +22,7 @@
 
   <ItemGroup>
     <Compile Remove="Model\IBaseEntity.cs" />
-    <Compile Remove="Migrations\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Remove="Migrations\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="Migrations\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="Migrations\**" />
+    <Compile Remove="Migrations\20230914151526_InitialCreate.Designer.cs" />
   </ItemGroup>
 
 </Project>

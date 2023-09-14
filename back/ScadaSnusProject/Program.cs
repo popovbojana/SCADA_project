@@ -64,20 +64,33 @@ using (var scope = app.Services.CreateScope())
 
     
 
-    /*
-    if (!dbContext.Alarms.Any())
-    {
-        dbContext.Alarms.Add(new Alarm
-        {
-            Value = 10.00,
-            TagId = 1,
-            Type = 0,
-            Priority = 0,
-            IsActive = true
-        });
+     
+     // if (!dbContext.Alarms.Any())
+     // {
+     //     dbContext.Alarms.Add(new Alarm
+     //     {
+     //         Value = 10.00,
+     //         TagId = 1,
+     //         Type = 0,
+     //         Priority = 0,
+     //         IsActive = true
+     //     });
+     //
+     //     dbContext.SaveChanges();
+     // }
+     
+     if (!dbContext.Tags.Any())
+     {
+         dbContext.Tags.Add(new Tag
+         {
+             Name = "ime",
+             Description = "opis",
+             IOAddress = "1",
+             Value = 12.2
+         });
 
-        dbContext.SaveChanges();
-    }*/
+         dbContext.SaveChanges();
+     }
 
     // Display user and tag information
     var users = dbContext.Users.ToList();
@@ -91,6 +104,12 @@ using (var scope = app.Services.CreateScope())
     {
         Console.WriteLine($"Alarm - Id: {alarm.Id}, Value: {alarm.Value}, Type: {alarm.Type}, Priority: {alarm.Priority}, IsActive: {alarm.IsActive}");
     }*/
+    
+    var tags = dbContext.Tags.ToList();
+    foreach (var tag in tags)
+    {
+        Console.WriteLine($"Tag - Id: {tag.Id}, Name: {tag.Name}, Description: {tag.Description}, IOAddress: {tag.IOAddress}, Value: {tag.Value}");
+    }
 }
 
 app.Run();
