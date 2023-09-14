@@ -1,25 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "D:\\snus\\SCADA_project\\back\\ScadaSnusProject\\ScadaSnusProject.csproj": {}
+    "C:\\Users\\filip\\Documents\\GitHub\\SCADA_project\\back\\ScadaSnusProject\\ScadaSnusProject.csproj": {}
   },
   "projects": {
-    "D:\\snus\\SCADA_project\\back\\ScadaSnusProject\\ScadaSnusProject.csproj": {
+    "C:\\Users\\filip\\Documents\\GitHub\\SCADA_project\\back\\ScadaSnusProject\\ScadaSnusProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\snus\\SCADA_project\\back\\ScadaSnusProject\\ScadaSnusProject.csproj",
+        "projectUniqueName": "C:\\Users\\filip\\Documents\\GitHub\\SCADA_project\\back\\ScadaSnusProject\\ScadaSnusProject.csproj",
         "projectName": "ScadaSnusProject",
-        "projectPath": "D:\\snus\\SCADA_project\\back\\ScadaSnusProject\\ScadaSnusProject.csproj",
-        "packagesPath": "C:\\Users\\Svetozar\\.nuget\\packages\\",
-        "outputPath": "D:\\snus\\SCADA_project\\back\\ScadaSnusProject\\obj\\",
+        "projectPath": "C:\\Users\\filip\\Documents\\GitHub\\SCADA_project\\back\\ScadaSnusProject\\ScadaSnusProject.csproj",
+        "packagesPath": "C:\\Users\\filip\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\filip\\Documents\\GitHub\\SCADA_project\\back\\ScadaSnusProject\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Svetozar\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\filip\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -49,6 +51,10 @@
             "Microsoft.EntityFrameworkCore.Design": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[6.0.0, )"
             },

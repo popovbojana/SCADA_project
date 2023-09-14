@@ -119,8 +119,9 @@ namespace ScadaSnusProject.Migrations
                         .HasColumnType("REAL")
                         .HasColumnName("AnalogInput_LowLimit");
 
-                    b.Property<int>("ScanTime")
-                        .HasColumnType("INTEGER")
+                    b.Property<string>("ScanTime")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
                         .HasColumnName("AnalogInput_ScanTime");
 
                     b.Property<string>("Unit")
@@ -155,8 +156,9 @@ namespace ScadaSnusProject.Migrations
                     b.Property<bool>("IsScanOn")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ScanTime")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("ScanTime")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasDiscriminator().HasValue("DigitalInput");
                 });

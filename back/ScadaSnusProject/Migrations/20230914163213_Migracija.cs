@@ -4,7 +4,7 @@
 
 namespace ScadaSnusProject.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Migracija : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

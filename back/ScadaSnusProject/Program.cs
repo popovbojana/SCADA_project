@@ -1,115 +1,106 @@
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ScadaSnusProject.DbContext;
-using ScadaSnusProject.Model;
 using System;
 using System.Linq;
+using ScadaSnusProject.Model;
 
-var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddRazorPages();
-
-// Configuration
-builder.Configuration.AddJsonFile("appsettings.json", optional: false);
-var configuration = builder.Configuration;
-
-builder.Services.AddDbContext<AppDbContext>(options =>
+namespace ScadaSnusProject
 {
-    options.UseSqlite(configuration.GetConnectionString("DefaultConnection"));
-});
-
-var app = builder.Build();
-
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Error");
-    app.UseHsts();
-}
-else
-{
-    app.UseDeveloperExceptionPage();
-}
-
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-app.UseRouting();
-app.UseAuthorization();
-
-app.MapRazorPages();
-
-// Database seeding and initialization
-using (var scope = app.Services.CreateScope())
-{
-    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-
-    // Apply pending migrations
-    dbContext.Database.Migrate();
-
-    // Seed data if the Users and Tags tables are empty
-    if (!dbContext.Users.Any())
+    public class Program
     {
-        dbContext.Users.Add(new User
+        public static void Main(string[] args)
         {
-            Name = "John",
-            Surname = "Doe",
-            Username = "johndoe",
-            Password = "password123"
-        });
+            var host = CreateHostBuilder(args).Build();
 
-        dbContext.SaveChanges();
-    }
+            using (var scope = host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                var dbContext = services.GetRequiredService<AppDbContext>();
+                
+                try
+                {
+                    dbContext.Database.Migrate();
 
-    
+                    InsertDataIntoDatabase(dbContext);
 
-     
-     // if (!dbContext.Alarms.Any())
-     // {
-     //     dbContext.Alarms.Add(new Alarm
-     //     {
-     //         Value = 10.00,
-     //         TagId = 1,
-     //         Type = 0,
-     //         Priority = 0,
-     //         IsActive = true
-     //     });
-     //
-     //     dbContext.SaveChanges();
-     // }
-     
-     if (!dbContext.Tags.Any())
-     {
-         dbContext.Tags.Add(new Tag
-         {
-             Name = "ime",
-             Description = "opis",
-             IOAddress = "1",
-             Value = 12.2
-         });
+                    RetrieveAllDataFromDatabase(dbContext);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("An error occurred while migrating the database or performing data operations.");
+                    Console.WriteLine(ex.Message);
+                }
+            }
 
-         dbContext.SaveChanges();
-     }
+            host.Run();
+        }
 
-    // Display user and tag information
-    var users = dbContext.Users.ToList();
-    foreach (var user in users)
-    {
-        Console.WriteLine($"User - Id: {user.Id}, Name: {user.Name}, Surname: {user.Surname}, Username: {user.Username}");
-    }
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
 
-    /*var alarms = dbContext.Alarms.ToList();
-    foreach (var alarm in alarms)
-    {
-        Console.WriteLine($"Alarm - Id: {alarm.Id}, Value: {alarm.Value}, Type: {alarm.Type}, Priority: {alarm.Priority}, IsActive: {alarm.IsActive}");
-    }*/
-    
-    var tags = dbContext.Tags.ToList();
-    foreach (var tag in tags)
-    {
-        Console.WriteLine($"Tag - Id: {tag.Id}, Name: {tag.Name}, Description: {tag.Description}, IOAddress: {tag.IOAddress}, Value: {tag.Value}");
+        private static void InsertDataIntoDatabase(AppDbContext dbContext)
+        {
+            var newUser = new User
+            {
+                Name = "Name",
+                Surname = "Surname",
+                Username = "Username",
+                Password = "Password"
+            };
+            
+            var newTag = new Tag
+            {
+                Name = "ime",
+                Description = "opis",
+                IOAddress = "1",
+                Value = 12.2
+            };
+
+            var newDigitalInput = new DigitalInput
+            {
+                Name = "ime",
+                Description = "opis",
+                IOAddress = "1",
+                Value = 12.2,
+                ScanTime = "1.5.2001",
+                IsScanOn = true
+            };
+
+            dbContext.Users.Add(newUser); // Add the new entity to the DbSet
+            dbContext.Tags.Add(newTag);
+            dbContext.DigitalInputs.Add(newDigitalInput);
+            dbContext.SaveChanges(); // Save changes to the database
+        }
+
+        private static void RetrieveAllDataFromDatabase(AppDbContext dbContext)
+        {
+            var allUsers = dbContext.Users.ToList();
+            Console.WriteLine("All Users in the Database:");
+            foreach (var user in allUsers)
+            {
+                Console.WriteLine($"User Id: {user.Id}, Name: {user.Name}, Surname: {user.Surname}, Username: {user.Username}, Password: {user.Password}");
+            }
+            
+            var allTags = dbContext.Tags.ToList();
+            Console.WriteLine("All Tags in the Database:");
+            foreach (var tag in allTags)
+            {
+                Console.WriteLine($"Tag - Id: {tag.Id}, Name: {tag.Name}, Description: {tag.Description}, IOAddress: {tag.IOAddress}, Value: {tag.Value}");
+            }
+            
+            var allDigitalInputs = dbContext.DigitalInputs.ToList();
+            Console.WriteLine("All DigitalInputs in the Database:");
+            foreach (var digitalInput in allDigitalInputs)
+            {
+                Console.WriteLine($"DigitalInputs - Id: {digitalInput.Id}, Name: {digitalInput.Name}, Description: {digitalInput.Description}, IOAddress: {digitalInput.IOAddress}, Value: {digitalInput.Value}, ScanTime: {digitalInput.ScanTime}, IsOn: {digitalInput.IsScanOn}");
+            }
+        }
     }
 }
-
-app.Run();

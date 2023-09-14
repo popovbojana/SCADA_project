@@ -10,8 +10,8 @@ using ScadaSnusProject.DbContext;
 namespace ScadaSnusProject.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230914151526_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230914163213_Migracija")]
+    partial class Migracija
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -121,8 +121,9 @@ namespace ScadaSnusProject.Migrations
                         .HasColumnType("REAL")
                         .HasColumnName("AnalogInput_LowLimit");
 
-                    b.Property<int>("ScanTime")
-                        .HasColumnType("INTEGER")
+                    b.Property<string>("ScanTime")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
                         .HasColumnName("AnalogInput_ScanTime");
 
                     b.Property<string>("Unit")
@@ -157,8 +158,9 @@ namespace ScadaSnusProject.Migrations
                     b.Property<bool>("IsScanOn")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ScanTime")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("ScanTime")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasDiscriminator().HasValue("DigitalInput");
                 });
