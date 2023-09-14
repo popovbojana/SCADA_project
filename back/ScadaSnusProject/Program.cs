@@ -69,7 +69,7 @@ namespace ScadaSnusProject
                 Description = "opis",
                 IOAddress = "1",
                 Value = 12.2,
-                ScanTime = "1.5.2001",
+                ScanTime = "2023-09-14T22:12:56",
                 IsScanOn = true
             };
 

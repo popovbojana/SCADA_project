@@ -26,6 +26,6 @@ namespace ScadaSnusProject.Model
         public AlarmType Type { get; set; }
         public AlarmPriority Priority { get; set; }
         public bool IsActive { get; set; }
-        public DateTime ActivatedTime { get; set; }
+        public string ActivatedTime { get; set; }
     }
 }
