@@ -9,7 +9,6 @@ namespace ScadaSnusProject.Model
         public double LowLimit { get; set; }
         public double HighLimit { get; set; }
         public string Unit { get; set; }
-        public virtual ICollection<Alarm> Alarms { get; set; } = new List<Alarm>();
 
     }
 }
