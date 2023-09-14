@@ -18,14 +18,12 @@ namespace ScadaSnusProject.Model
 
     public class Alarm
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public double Value { get; set; }
         public int TagId { get; set; }
         public virtual Tag Tag { get; set; }
         public AlarmType Type { get; set; }
         public AlarmPriority Priority { get; set; }
         public bool IsActive { get; set; }
-
-
     }
 }

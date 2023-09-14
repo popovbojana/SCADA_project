@@ -1,18 +1,24 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Linq;
 using ScadaSnusProject.DbContext;
 using ScadaSnusProject.Model;
+using System;
+using System.Linq;
 
 var builder = WebApplication.CreateBuilder(args);
-
 builder.Services.AddRazorPages();
+
+// Configuration
+builder.Configuration.AddJsonFile("appsettings.json", optional: false);
+var configuration = builder.Configuration;
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.UseSqlite(configuration.GetConnectionString("DefaultConnection"));
 });
 
 var app = builder.Build();
@@ -22,55 +28,69 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
+else
+{
+    app.UseDeveloperExceptionPage();
+}
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthorization();
 
 app.MapRazorPages();
 
+// Database seeding and initialization
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
+    // Apply pending migrations
     dbContext.Database.Migrate();
 
-    var newUser = new User
+    // Seed data if the Users and Tags tables are empty
+    if (!dbContext.Users.Any())
     {
-        Name = "John",
-        Surname = "Doe",
-        Username = "johndoe",
-        Password = "password123"
-    };
+        dbContext.Users.Add(new User
+        {
+            Name = "John",
+            Surname = "Doe",
+            Username = "johndoe",
+            Password = "password123"
+        });
+
+        dbContext.SaveChanges();
+    }
+
     
 
-    var newTag = new Tag
+    /*
+    if (!dbContext.Alarms.Any())
     {
-        Name = "Tag",
-        Description = "Ovo je tag",
-        IOAddress = "Neka adresa",
-        Value = 10.000,
-        isDeleted = true
-    };
+        dbContext.Alarms.Add(new Alarm
+        {
+            Value = 10.00,
+            TagId = 1,
+            Type = 0,
+            Priority = 0,
+            IsActive = true
+        });
 
-    dbContext.Tags.Add(newTag);
-    dbContext.Users.Add(newUser);
-    dbContext.SaveChanges();
+        dbContext.SaveChanges();
+    }*/
 
+    // Display user and tag information
     var users = dbContext.Users.ToList();
     foreach (var user in users)
     {
-        Console.WriteLine($"Id: {user.Id}, Name: {user.Name}, Surname: {user.Surname}, Username: {user.Username}, Password: {user.Password}");
+        Console.WriteLine($"User - Id: {user.Id}, Name: {user.Name}, Surname: {user.Surname}, Username: {user.Username}");
     }
-    
-    var tags = dbContext.Tags.ToList();
-    foreach (var user in users)
+
+    /*var alarms = dbContext.Alarms.ToList();
+    foreach (var alarm in alarms)
     {
-        Console.WriteLine($"Id: {user.Id}, Name: {user.Name}, Surname: {user.Surname}, Username: {user.Username}, Password: {user.Password}");
-    }
+        Console.WriteLine($"Alarm - Id: {alarm.Id}, Value: {alarm.Value}, Type: {alarm.Type}, Priority: {alarm.Priority}, IsActive: {alarm.IsActive}");
+    }*/
 }
 
 app.Run();

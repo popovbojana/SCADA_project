@@ -1,6 +1,3 @@
-using System;
-using System.ComponentModel.DataAnnotations;
-
 namespace ScadaSnusProject.Model
 {
     public class Tag
@@ -10,7 +7,5 @@ namespace ScadaSnusProject.Model
         public string Description { get; set; }
         public string IOAddress { get; set; }
         public double Value { get; set; }
-        public bool isDeleted { get; set; }
-
     }
 }

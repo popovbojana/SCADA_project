@@ -11,7 +11,7 @@ using ScadaSnusProject.DbContext;
 namespace ScadaSnusProject.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230914102343_InitialCreate")]
+    [Migration("20230914121532_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,9 +21,9 @@ namespace ScadaSnusProject.Migrations
 
             modelBuilder.Entity("ScadaSnusProject.Model.Alarm", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("INTEGER");
@@ -49,9 +49,9 @@ namespace ScadaSnusProject.Migrations
 
             modelBuilder.Entity("ScadaSnusProject.Model.AlarmRecord", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("TagId")
                         .HasColumnType("INTEGER");
