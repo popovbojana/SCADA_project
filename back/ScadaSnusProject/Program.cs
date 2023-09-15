@@ -47,14 +47,8 @@ namespace ScadaSnusProject
 
         private static void InsertDataIntoDatabase(AppDbContext dbContext)
         {
-            var newUser = new User
-            {
-                Name = "Name",
-                Surname = "Surname",
-                Username = "Username",
-                Password = "Password"
-            };
-            
+            var newUser = new User("name", "surname", "username", "password");
+
             var newTag = new Tag
             {
                 Name = "ime",
@@ -73,10 +67,10 @@ namespace ScadaSnusProject
                 IsScanOn = true
             };
 
-            dbContext.Users.Add(newUser); // Add the new entity to the DbSet
+            dbContext.Users.Add(newUser);
             dbContext.Tags.Add(newTag);
             dbContext.DigitalInputs.Add(newDigitalInput);
-            dbContext.SaveChanges(); // Save changes to the database
+            dbContext.SaveChanges();
         }
 
         private static void RetrieveAllDataFromDatabase(AppDbContext dbContext)
