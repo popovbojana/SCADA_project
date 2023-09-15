@@ -26,20 +26,23 @@ namespace ScadaSnusProject
         {
             services.AddRazorPages();
 
-            services.AddDbContext<AppDbContext>(options =>
-             {
-                 options.UseSqlite(Configuration.GetConnectionString("SqliteConnection"));
-             });
+            services.AddSingleton<AppDbContext>(provider => {
+                var options = new DbContextOptionsBuilder<AppDbContext>()
+                    .UseSqlite(Configuration.GetConnectionString("SqliteConnection"))
+                    .Options;
+                return new AppDbContext(options);
+            });
+
             
             //Repositories
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<ITagRepository, TagRepository>();
-            services.AddScoped<IAlarmRepository, AlarmRepository>();
+            services.AddSingleton<IUserRepository, UserRepository>();
+            services.AddSingleton<ITagRepository, TagRepository>();
+            services.AddSingleton<IAlarmRepository, AlarmRepository>();
 
             //Services
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<ITagService, TagService>();
-            services.AddScoped<IAlarmService, AlarmService>();
+            services.AddSingleton<IUserService, UserService>();
+            services.AddSingleton<ITagService, TagService>();
+            services.AddSingleton<IAlarmService, AlarmService>();
             
             //Controllers
             services.AddControllers();

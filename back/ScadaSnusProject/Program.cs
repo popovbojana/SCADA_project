@@ -18,9 +18,9 @@ namespace ScadaSnusProject
                 try
                 {
                     dbContext.Database.Migrate();
-
+            
                     InsertDataIntoDatabase(dbContext);
-
+            
                     // RetrieveAllDataFromDatabase(dbContext);
                 }
                 catch (Exception ex)

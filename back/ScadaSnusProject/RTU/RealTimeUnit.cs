@@ -13,18 +13,18 @@ public class RealTimeUnit : BackgroundService
 {
     private readonly ILogger<RealTimeUnit> _logger;
     private static readonly Random Random = new Random();
-    // private readonly ITagRepository _tagRepository;
+    private readonly ITagRepository _tagRepository;
 
-    // public RealTimeUnit(ILogger<RealTimeUnit> logger, ITagRepository tagRepository)
-    // {
-    //     _logger = logger;
-    //     _tagRepository = tagRepository;
-    // }
-    
-    public RealTimeUnit(ILogger<RealTimeUnit> logger)
+    public RealTimeUnit(ILogger<RealTimeUnit> logger, ITagRepository tagRepository)
     {
         _logger = logger;
+        _tagRepository = tagRepository;
     }
+    
+    // public RealTimeUnit(ILogger<RealTimeUnit> logger)
+    // {
+    //     _logger = logger;
+    // }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
@@ -39,18 +39,18 @@ public class RealTimeUnit : BackgroundService
             if (isAnalog)
             {
                 var tag = GenerateRandomAnalogInput();
-                // _tagRepository.AddAnalogInput(tag);
+                _tagRepository.AddAnalogInput(tag);
                 _logger.LogInformation($"Analog input: Name:{tag.Name}, Description: {tag.Description}, IOAddress: {tag.IOAddress}, Value: {tag.Value}, ScanTime: {tag.ScanTime}, IsScanOn: {tag.IsScanOn}, LowLimit: {tag.LowLimit}, HighLimit: {tag.HighLimit}, Unit: {tag.Unit}");
             }
             else
             {
                 var tag = GenerateRandomDigitalInput();
-                // _tagRepository.AddDigitalInput(tag);
+                _tagRepository.AddDigitalInput(tag);
                 _logger.LogInformation(
                     $"Digital input: Name:{tag.Name}, Description: {tag.Description}, IOAddress: {tag.IOAddress}, Value: {tag.Value}, ScanTime: {tag.ScanTime}, IsScanOn: {tag.IsScanOn}");
             }
             
-            await Task.Delay(TimeSpan.FromSeconds(2), stoppingToken);
+            await Task.Delay(TimeSpan.FromSeconds(1), stoppingToken);
         }
 
         _logger.LogInformation("RTU Background Service is stopping.");
