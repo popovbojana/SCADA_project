@@ -8,6 +8,8 @@ using ScadaSnusProject.DbContext;
 using ScadaSnusProject.Repositories;
 using ScadaSnusProject.Repositories.Interfaces;
 using ScadaSnusProject.RTU;
+using ScadaSnusProject.Services;
+using ScadaSnusProject.Services.Interfaces;
 
 namespace ScadaSnusProject
 {
@@ -22,14 +24,28 @@ namespace ScadaSnusProject
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppDbContext>(options =>
-            {
-                options.UseSqlite(Configuration.GetConnectionString("SqliteConnection"));
-            });
+            services.AddRazorPages();
 
-            services.AddControllers();
-            services.AddHostedService<RealTimeUnit>();
+            services.AddDbContext<AppDbContext>(options =>
+             {
+                 options.UseSqlite(Configuration.GetConnectionString("SqliteConnection"));
+             });
+            
+            //Repositories
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ITagRepository, TagRepository>();
+            services.AddScoped<IAlarmRepository, AlarmRepository>();
+
+            //Services
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ITagService, TagService>();
+            services.AddScoped<IAlarmService, AlarmService>();
+            
+            //Controllers
+            services.AddControllers();
+            
+            //RTU
+            services.AddHostedService<RealTimeUnit>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -40,7 +56,7 @@ namespace ScadaSnusProject
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
 
@@ -49,12 +65,9 @@ namespace ScadaSnusProject
 
             app.UseRouting();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-            });
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints => { endpoints.MapRazorPages(); });
         }
     }
 }

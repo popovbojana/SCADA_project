@@ -39,10 +39,6 @@ namespace ScadaSnusProject
                 {
                     webBuilder.UseStartup<Startup>();
                 });
-                // .ConfigureServices((hostContext, services) =>
-                // {
-                //     services.AddHostedService<RealTimeUnit>();
-                // });
 
 
         private static void InsertDataIntoDatabase(AppDbContext dbContext)
