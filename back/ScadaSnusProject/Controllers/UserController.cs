@@ -9,7 +9,7 @@ namespace ScadaSnusProject.Controllers;
 [Route("api/user")]
 public class UserController : Controller
 {
-    private IUserService _userService;
+    private readonly IUserService _userService;
 
     public UserController(IUserService userService) 
     {
@@ -23,7 +23,7 @@ public class UserController : Controller
         try
         {
             var user = _userService.RegisterNewUser(registerUser);
-            return Ok($"Successfully registered as {user.Username}!");
+            return Ok( new {Message = $"Successfully registered as {user.Username}!" });
         }
         catch (Exception e)
         {
@@ -38,7 +38,7 @@ public class UserController : Controller
         try
         {
             var user = _userService.Login(loginCredentials);
-            return Ok($"Successfully logged in as {user.Username}!");
+            return Ok(new {Message = $"Successfully logged in as {user.Username}!" });
         }
         catch (Exception e)
         {

@@ -72,14 +72,17 @@ public class TagRepository : ITagRepository
         return _context.Tags.FirstOrDefault(t => t.Id == tagId);
     }
 
-    public void DeleteTag(int tagId)
+    public bool DeleteTag(int tagId)
     {
         var tag = GetTagById(tagId);
         if (tag != null)
         {
             _context.Tags.Remove(tag);
             _context.SaveChanges();
+            return true;
         }
+
+        return false;
     }
 
     public void AddDigitalInput(DigitalInput digitalInput)

@@ -13,7 +13,7 @@ public interface ITagRepository
     public ICollection<Tag> GetAllInputs();
     public ICollection<Tag> GetAllOutputs();
     public Tag? GetTagById(int tagId);
-    public void DeleteTag(int tagId);
+    public bool DeleteTag(int tagId);
     public void AddDigitalInput(DigitalInput digitalInput);
     public void AddDigitalOutput(DigitalOutput digitalOutput);
     public void AddAnalogInput(AnalogInput analogInput);

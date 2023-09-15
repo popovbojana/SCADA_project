@@ -34,7 +34,11 @@ public class TagService : ITagService
 
     public void DeleteTag(int tagId)
     {
-        _tagRepository.DeleteTag(tagId);
+        var success = _tagRepository.DeleteTag(tagId);
+        if (!success)
+        {
+            throw new Exception("Tag with this id does not exist!");
+        }
     }
 
     public ICollection<Tag> GetAllInputs()
@@ -47,14 +51,22 @@ public class TagService : ITagService
         return _tagRepository.GetAllOutputs();
     }
 
-    public bool TurnOnScan(int tagId)
+    public void TurnOnScan(int tagId)
     {
-        return _tagRepository.TurnOnScan(tagId);
+        var success = _tagRepository.TurnOnScan(tagId);
+        if (!success)
+        {
+            throw new Exception("Tag with this id does not exist or is already turned on!");
+        }
     }
 
-    public bool TurnOffScan(int tagId)
+    public void TurnOffScan(int tagId)
     {
-        return _tagRepository.TurnOffScan(tagId);
+        var success = _tagRepository.TurnOffScan(tagId);
+        if (!success)
+        {
+            throw new Exception("Tag with this id does not exist or is already turned off!");
+        }
     }
 
     public ICollection<Tag> GetAllTags()

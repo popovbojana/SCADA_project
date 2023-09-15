@@ -12,8 +12,8 @@ public interface ITagService
     public void DeleteTag(int tagId);
     public ICollection<Tag> GetAllInputs();
     public ICollection<Tag> GetAllOutputs();
-    public bool TurnOnScan(int tagId);
-    public bool TurnOffScan(int tagId);
+    public void TurnOnScan(int tagId);
+    public void TurnOffScan(int tagId);
     public ICollection<Tag> GetAllTags();
     public ICollection<DigitalInput> GetAllDigitalInputs();
     public ICollection<DigitalOutput> GetAllDigitalOutputs();
