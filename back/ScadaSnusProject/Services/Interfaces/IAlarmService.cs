@@ -6,5 +6,5 @@ public interface IAlarmService
 {
     public ICollection<Alarm> GetAllAlarms();
     public void AddAlarm(Alarm alarm);
-    public bool RemoveAlarm(int id);
+    public void RemoveAlarm(int id);
 }

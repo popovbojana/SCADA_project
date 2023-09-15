@@ -22,8 +22,12 @@ public class AlarmService : IAlarmService
         _alarmRepository.AddAlarm(alarm);
     }
 
-    public bool RemoveAlarm(int id)
+    public void RemoveAlarm(int id)
     {
-        return _alarmRepository.RemoveAlarm(id);
+        var success = _alarmRepository.RemoveAlarm(id);
+        if (!success)
+        {
+            throw new Exception("Alarm with this id does not exist!");
+        }
     }
 }
