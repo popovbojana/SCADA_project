@@ -1,10 +1,5 @@
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using ScadaSnusProject.DbContext;
-using System;
-using System.Linq;
 using ScadaSnusProject.Model;
 
 namespace ScadaSnusProject
@@ -26,7 +21,7 @@ namespace ScadaSnusProject
 
                     InsertDataIntoDatabase(dbContext);
 
-                    RetrieveAllDataFromDatabase(dbContext);
+                    // RetrieveAllDataFromDatabase(dbContext);
                 }
                 catch (Exception ex)
                 {
@@ -44,6 +39,11 @@ namespace ScadaSnusProject
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+                // .ConfigureServices((hostContext, services) =>
+                // {
+                //     services.AddHostedService<RealTimeUnit>();
+                // });
+
 
         private static void InsertDataIntoDatabase(AppDbContext dbContext)
         {

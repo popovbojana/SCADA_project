@@ -5,6 +5,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ScadaSnusProject.DbContext;
+using ScadaSnusProject.Repositories;
+using ScadaSnusProject.Repositories.Interfaces;
+using ScadaSnusProject.RTU;
 
 namespace ScadaSnusProject
 {
@@ -25,6 +28,8 @@ namespace ScadaSnusProject
             });
 
             services.AddControllers();
+            services.AddHostedService<RealTimeUnit>();
+            services.AddScoped<ITagRepository, TagRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
