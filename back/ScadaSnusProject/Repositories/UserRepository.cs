@@ -26,4 +26,10 @@ public class UserRepository : IUserRepository
         _context.Users.Add(user);
         _context.SaveChanges();
     }
+
+    public User? GetUserByUsername(string username)
+    {
+        return _context.Users.FirstOrDefault(u => u.Username == username);
+    }
+    
 }
