@@ -27,13 +27,16 @@ public class AlarmRepository : IAlarmRepository
         _context.SaveChanges();
     }
 
-    public void RemoveAlarm(int id)
+    public bool RemoveAlarm(int id)
     {
         var alarm = GetAlarmById(id);
         if (alarm != null)
         {
             _context.Alarms.Remove(alarm);
             _context.SaveChanges();
+            return true;
         }
+
+        return false;
     }
 }
