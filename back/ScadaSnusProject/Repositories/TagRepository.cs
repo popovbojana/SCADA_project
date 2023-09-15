@@ -13,7 +13,25 @@ public class TagRepository : ITagRepository
     }
     public ICollection<Tag> GetAllTags()
     {
-        return _context.Tags.ToList();
+        // return _context.Tags.ToList();
+        List<Tag> allTags = new List<Tag>();
+        foreach (var dInput in _context.DigitalInputs.ToList())
+        {
+            allTags.Add(dInput);
+        }
+        foreach (var dOutput in _context.DigitalOutputs.ToList())
+        {
+            allTags.Add(dOutput);
+        }
+        foreach (var aInput in _context.AnalogInputs.ToList())
+        {
+            allTags.Add(aInput);
+        }
+        foreach (var aOutput in _context.AnalogOutputs.ToList())
+        {
+            allTags.Add(aOutput);
+        }
+        return allTags;
     }
 
     public ICollection<DigitalInput> GetAllDigitalInputs()

@@ -50,7 +50,7 @@ public class RealTimeUnit : BackgroundService
                     $"Digital input: Name:{tag.Name}, Description: {tag.Description}, IOAddress: {tag.IOAddress}, Value: {tag.Value}, ScanTime: {tag.ScanTime}, IsScanOn: {tag.IsScanOn}");
             }
             
-            await Task.Delay(TimeSpan.FromSeconds(1), stoppingToken);
+            await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
         }
 
         _logger.LogInformation("RTU Background Service is stopping.");

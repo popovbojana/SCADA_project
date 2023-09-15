@@ -1,8 +1,11 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 
 namespace ScadaSnusProject.Model
 {
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum AlarmPriority
     {
         LOW,
@@ -10,6 +13,7 @@ namespace ScadaSnusProject.Model
         HIGH
     }
 
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum AlarmType
     {
         LOWER,
@@ -22,20 +26,11 @@ namespace ScadaSnusProject.Model
         public int Id { get; set; }
         public double Value { get; set; }
         public int TagId { get; set; }
-        public virtual Tag Tag { get; set; }
+        public virtual Tag? Tag { get; set; }
         public AlarmType Type { get; set; }
         public AlarmPriority Priority { get; set; }
         public bool IsActive { get; set; }
         public string ActivatedTime { get; set; }
-
-        // public Alarm(double value, int tagId, AlarmType type, AlarmPriority priority, bool isActive, string activatedTime)
-        // {
-        //     Value = value;
-        //     TagId = tagId;
-        //     Type = type;
-        //     Priority = priority;
-        //     IsActive = isActive;
-        //     ActivatedTime = activatedTime;
-        // }
+        
     }
 }
