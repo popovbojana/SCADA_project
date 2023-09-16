@@ -90,6 +90,11 @@ public class TagRepository : ITagRepository
         return _context.Tags.FirstOrDefault(t => t.Id == tagId);
     }
 
+    public Tag? GetTagByIOAddress(string address)
+    {
+        return _context.Tags.FirstOrDefault(t => t.IOAddress == address);
+    }
+
     public bool DeleteTag(int tagId)
     {
         var tag = GetTagById(tagId);
@@ -103,28 +108,52 @@ public class TagRepository : ITagRepository
         return false;
     }
 
-    public void AddDigitalInput(DigitalInput digitalInput)
+    public bool AddDigitalInput(DigitalInput digitalInput)
     {
+        var existingTag = GetTagByIOAddress(digitalInput.IOAddress);
+        if (existingTag != null)
+        {
+            return false;
+        }
         _context.DigitalInputs.Add(digitalInput);
         _context.SaveChanges();
+        return true;
     }
 
-    public void AddDigitalOutput(DigitalOutput digitalOutput)
+    public bool AddDigitalOutput(DigitalOutput digitalOutput)
     {
+        var existingTag = GetTagByIOAddress(digitalOutput.IOAddress);
+        if (existingTag != null)
+        {
+            return false;
+        }
         _context.DigitalOutputs.Add(digitalOutput);
         _context.SaveChanges();
+        return true;
     }
 
-    public void AddAnalogInput(AnalogInput analogInput)
+    public bool AddAnalogInput(AnalogInput analogInput)
     {
+        var existingTag = GetTagByIOAddress(analogInput.IOAddress);
+        if (existingTag != null)
+        {
+            return false;
+        }
         _context.AnalogInputs.Add(analogInput);
         _context.SaveChanges();
+        return true;
     }
 
-    public void AddAnalogOutput(AnalogOutput analogOutput)
+    public bool AddAnalogOutput(AnalogOutput analogOutput)
     {
+        var existingTag = GetTagByIOAddress(analogOutput.IOAddress);
+        if (existingTag != null)
+        {
+            return false;
+        }
         _context.AnalogOutputs.Add(analogOutput);
         _context.SaveChanges();
+        return true;
     }
     
 

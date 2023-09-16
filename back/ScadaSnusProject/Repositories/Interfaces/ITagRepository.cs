@@ -13,11 +13,12 @@ public interface ITagRepository
     public ICollection<Tag> GetAllInputs();
     public ICollection<Tag> GetAllOutputs();
     public Tag? GetTagById(int tagId);
+    public Tag? GetTagByIOAddress(string address);
     public bool DeleteTag(int tagId);
-    public void AddDigitalInput(DigitalInput digitalInput);
-    public void AddDigitalOutput(DigitalOutput digitalOutput);
-    public void AddAnalogInput(AnalogInput analogInput);
-    public void AddAnalogOutput(AnalogOutput analogOutput);
+    public bool AddDigitalInput(DigitalInput digitalInput);
+    public bool AddDigitalOutput(DigitalOutput digitalOutput);
+    public bool AddAnalogInput(AnalogInput analogInput);
+    public bool AddAnalogOutput(AnalogOutput analogOutput);
     public DigitalInput? GetDigitalInputTagById(int tagId);
     public AnalogInput? GetAnalogInputTagById(int tagId);
     public bool TurnOffScan(int tagId);

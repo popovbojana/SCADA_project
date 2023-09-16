@@ -14,22 +14,38 @@ public class TagService : ITagService
     }
     public void AddAnalogInput(AnalogInput analogInput)
     {
-        _tagRepository.AddAnalogInput(analogInput);
+        var success = _tagRepository.AddAnalogInput(analogInput);
+        if (!success)
+        {
+            throw new Exception("This IOAddress is already in use!");
+        }
     }
 
     public void AddAnalogOutput(AnalogOutput analogOutput)
     {
-        _tagRepository.AddAnalogOutput(analogOutput);
+        var success = _tagRepository.AddAnalogOutput(analogOutput);
+        if (!success)
+        {
+            throw new Exception("This IOAddress is already in use!");
+        }
     }
 
     public void AddDigitalInput(DigitalInput digitalInput)
     {
-        _tagRepository.AddDigitalInput(digitalInput);
+        var success = _tagRepository.AddDigitalInput(digitalInput);
+        if (!success)
+        {
+            throw new Exception("This IOAddress is already in use!");
+        }
     }
 
     public void AddDigitalOutput(DigitalOutput digitalOutput)
     {
-        _tagRepository.AddDigitalOutput(digitalOutput);
+        var success = _tagRepository.AddDigitalOutput(digitalOutput);
+        if (!success)
+        {
+            throw new Exception("This IOAddress is already in use!");
+        }
     }
 
     public void DeleteTag(int tagId)

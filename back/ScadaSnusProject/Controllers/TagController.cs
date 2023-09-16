@@ -19,32 +19,60 @@ public class TagController : Controller
     [Route("add-analog-input")]
     public ActionResult AddAnalogInput(AnalogInput analogInput)
     {
-        _tagService.AddAnalogInput(analogInput);
-        return Ok(new { Message = "Successfully added new analog input!" });
+        try
+        {
+            _tagService.AddAnalogInput(analogInput);
+            return Ok(new { Message = "Successfully added new analog input!" });
+        }
+        catch (Exception e)
+        {
+            return BadRequest(new { Message = e.Message });
+        }
     }
     
     [HttpPost]
     [Route("add-analog-output")]
     public ActionResult AddAnalogOutput(AnalogOutput analogOutput)
     {
-        _tagService.AddAnalogOutput(analogOutput);
-        return Ok(new { Message = "Successfully added new analog output!" });
+        try
+        {
+            _tagService.AddAnalogOutput(analogOutput);
+            return Ok(new { Message = "Successfully added new analog output!" });
+        }
+        catch (Exception e)
+        {
+            return BadRequest(new { Message = e.Message });
+        }
     }
     
     [HttpPost]
     [Route("add-digital-input")]
     public ActionResult AddDigitalInput(DigitalInput digitalInput)
     {
-        _tagService.AddDigitalInput(digitalInput);
-        return Ok(new { Message = "Successfully added new digital input!" });
+        try
+        {
+            _tagService.AddDigitalInput(digitalInput);
+            return Ok(new { Message = "Successfully added new digital input!" });
+        }
+        catch (Exception e)
+        {
+            return BadRequest(new { Message = e.Message });
+        }
     }
     
     [HttpPost]
     [Route("add-digital-output")]
     public ActionResult AddDigitalOutput(DigitalOutput digitalOutput)
     {
-        _tagService.AddDigitalOutput(digitalOutput);
-        return Ok(new { Message = "Successfully added new digital output!" });
+        try
+        {
+            _tagService.AddDigitalOutput(digitalOutput);
+            return Ok(new { Message = "Successfully added new digital output!" });
+        }
+        catch (Exception e)
+        {
+            return BadRequest(new { Message = e.Message });
+        }
     }
 
     [HttpDelete]
