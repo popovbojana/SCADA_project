@@ -251,4 +251,26 @@ public class TagRepository : ITagRepository
         }
         return false;
     }
+
+    public ICollection<Tag> GetAllOnScanInputs()
+    {
+        List<Tag> allOnScanInputs = new List<Tag>();
+        List<DigitalInput> allDigitalInputs = _context.DigitalInputs.ToList();
+        List<AnalogInput> allAnalogInputs = _context.AnalogInputs.ToList();
+        foreach (var dInput in allDigitalInputs)
+        {
+            if (dInput.IsScanOn)
+            {
+                allOnScanInputs.Add(dInput);
+            }
+        }
+        foreach (var aInput in allAnalogInputs)
+        {
+            if (aInput.IsScanOn)
+            {
+                allOnScanInputs.Add(aInput);
+            }
+        }
+        return allOnScanInputs;
+    }
 }

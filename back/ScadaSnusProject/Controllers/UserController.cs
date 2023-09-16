@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ScadaSnusProject.DTOs;
-using ScadaSnusProject.Model;
 using ScadaSnusProject.Services.Interfaces;
 
 namespace ScadaSnusProject.Controllers;
@@ -27,7 +26,7 @@ public class UserController : Controller
         }
         catch (Exception e)
         {
-            return BadRequest(new { Message = e.Message });
+            return BadRequest(new { e.Message });
         }
     }
     
@@ -42,7 +41,7 @@ public class UserController : Controller
         }
         catch (Exception e)
         {
-            return BadRequest(new { Message = e.Message });
+            return BadRequest(new { e.Message });
         }
     }
 

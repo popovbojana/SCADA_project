@@ -1,4 +1,5 @@
-﻿using ScadaSnusProject.Model;
+﻿using System.Collections;
+using ScadaSnusProject.Model;
 using ScadaSnusProject.Repositories.Interfaces;
 using ScadaSnusProject.Services.Interfaces;
 
@@ -108,5 +109,10 @@ public class TagService : ITagService
     public ICollection<AnalogOutput> GetAllAnalogOutputs()
     {
         return _tagRepository.GetAllAnalogOutputs();
+    }
+
+    public ICollection<Tag> GetAllOnScanInputs()
+    {
+        return _tagRepository.GetAllOnScanInputs();
     }
 }

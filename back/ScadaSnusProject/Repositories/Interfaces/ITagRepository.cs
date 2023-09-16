@@ -23,5 +23,5 @@ public interface ITagRepository
     public AnalogInput? GetAnalogInputTagById(int tagId);
     public bool TurnOffScan(int tagId);
     public bool TurnOnScan(int tagId);
-
+    public ICollection<Tag> GetAllOnScanInputs();
 }

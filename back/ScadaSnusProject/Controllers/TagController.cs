@@ -26,7 +26,7 @@ public class TagController : Controller
         }
         catch (Exception e)
         {
-            return BadRequest(new { Message = e.Message });
+            return BadRequest(new { e.Message });
         }
     }
     
@@ -41,7 +41,7 @@ public class TagController : Controller
         }
         catch (Exception e)
         {
-            return BadRequest(new { Message = e.Message });
+            return BadRequest(new { e.Message });
         }
     }
     
@@ -56,7 +56,7 @@ public class TagController : Controller
         }
         catch (Exception e)
         {
-            return BadRequest(new { Message = e.Message });
+            return BadRequest(new { e.Message });
         }
     }
     
@@ -71,7 +71,7 @@ public class TagController : Controller
         }
         catch (Exception e)
         {
-            return BadRequest(new { Message = e.Message });
+            return BadRequest(new { e.Message });
         }
     }
 
@@ -86,7 +86,7 @@ public class TagController : Controller
         } 
         catch (Exception e)
         {
-            return BadRequest(new { Message = e.Message });
+            return BadRequest(new { e.Message });
         }
     }
 
@@ -101,7 +101,7 @@ public class TagController : Controller
         }
         catch (Exception e)
         {
-            return BadRequest(new { Message = e.Message });
+            return BadRequest(new { e.Message });
         }
     }
     
@@ -116,7 +116,7 @@ public class TagController : Controller
         }
         catch (Exception e)
         {
-            return BadRequest(new { Message = e.Message });
+            return BadRequest(new { e.Message });
         }
     }
 
@@ -167,6 +167,13 @@ public class TagController : Controller
     public ActionResult GetAllDigitalOutputs()
     {
         return Ok(_tagService.GetAllDigitalOutputs());
+    }
+
+    [HttpGet]
+    [Route("all-on-scan-inputs")]
+    public ActionResult GetAllOnScanInputs()
+    {
+        return Ok(_tagService.GetAllOnScanInputs());
     }
     
 }

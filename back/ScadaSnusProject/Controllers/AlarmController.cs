@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ScadaSnusProject.Model;
-using ScadaSnusProject.Repositories.Interfaces;
 using ScadaSnusProject.Services.Interfaces;
 
 namespace ScadaSnusProject.Controllers;
@@ -20,8 +19,15 @@ public class AlarmController : Controller
     [Route("add-alarm")]
     public ActionResult AddAlarm(Alarm alarm)
     {
-        _alarmService.AddAlarm(alarm);
-        return Ok(new { Message = "Successfully added new alarm!" });
+        try
+        {
+            _alarmService.AddAlarm(alarm);
+            return Ok(new { Message = "Successfully added new alarm!" });
+        }
+        catch (Exception e)
+        {
+            return BadRequest(new { e.Message });
+        }
     }
     
     [HttpDelete]
@@ -35,7 +41,7 @@ public class AlarmController : Controller
         }
         catch (Exception e)
         {
-            return BadRequest(new { Message = e.Message });
+            return BadRequest(new { e.Message });
         }
     }
     

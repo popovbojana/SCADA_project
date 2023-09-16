@@ -19,4 +19,5 @@ public interface ITagService
     public ICollection<DigitalOutput> GetAllDigitalOutputs();
     public ICollection<AnalogInput> GetAllAnalogInputs();
     public ICollection<AnalogOutput> GetAllAnalogOutputs();
+    public ICollection<Tag> GetAllOnScanInputs();
 }

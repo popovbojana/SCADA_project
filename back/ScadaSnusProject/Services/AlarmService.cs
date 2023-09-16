@@ -19,7 +19,11 @@ public class AlarmService : IAlarmService
 
     public void AddAlarm(Alarm alarm)
     {
-        _alarmRepository.AddAlarm(alarm);
+        var success = _alarmRepository.AddAlarm(alarm);
+        if (!success)
+        {
+            throw new Exception("Can't create new alarm because tag with this id doesn't exist!");
+        }
     }
 
     public void RemoveAlarm(int id)
