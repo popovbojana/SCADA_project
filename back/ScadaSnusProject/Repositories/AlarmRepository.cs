@@ -1,4 +1,5 @@
-﻿using ScadaSnusProject.DbContext;
+﻿using System.Collections;
+using ScadaSnusProject.DbContext;
 using ScadaSnusProject.Model;
 using ScadaSnusProject.Repositories.Interfaces;
 
@@ -46,5 +47,25 @@ public class AlarmRepository : IAlarmRepository
         }
 
         return false;
+    }
+
+    public void AddNewAlarmActivation(AlarmActivation alarmActivation)
+    {
+        _context.AlarmActivations.Add(alarmActivation);
+        _context.SaveChanges();
+    }
+
+    public ICollection<Alarm> GetAllAlarmsForInput(int id)
+    {
+        List<Alarm> alarms = new List<Alarm>();
+        foreach (var alarm in GetAllAlarms())
+        {
+            if (alarm.TagId == id)
+            {
+                alarms.Add(alarm);
+            }
+        }
+
+        return alarms;
     }
 }

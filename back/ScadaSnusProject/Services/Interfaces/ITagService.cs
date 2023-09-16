@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using ScadaSnusProject.Model;
+﻿using ScadaSnusProject.Model;
 
 namespace ScadaSnusProject.Services.Interfaces;
 

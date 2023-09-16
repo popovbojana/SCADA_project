@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.SignalR;
-using Microsoft.VisualBasic.CompilerServices;
-using ScadaSnusProject.Hubs;
+﻿// using Microsoft.AspNetCore.SignalR;
+// using ScadaSnusProject.Hubs;
+
+using System.Collections.ObjectModel;
 using ScadaSnusProject.Model;
 using ScadaSnusProject.Repositories.Interfaces;
-using ScadaSnusProject.Global;
 
 namespace ScadaSnusProject.RTU;
 
@@ -18,18 +18,23 @@ public class RealTimeUnit : BackgroundService
     private readonly ILogger<RealTimeUnit> _logger;
     private static readonly Random Random = new Random();
     private readonly ITagRepository _tagRepository;
-    private readonly IHubContext<TagHub> _hubContext;
 
-    public RealTimeUnit(ILogger<RealTimeUnit> logger, ITagRepository tagRepository, IHubContext<TagHub> hubContext)
+    private readonly IAlarmRepository _alarmRepository;
+    // private readonly IHubContext<TagHub> _hubContext;
+
+    public RealTimeUnit(ILogger<RealTimeUnit> logger, ITagRepository tagRepository, IAlarmRepository alarmRepository)
     {
         _logger = logger;
         _tagRepository = tagRepository;
-        _hubContext = hubContext;
+        _alarmRepository = alarmRepository;
     }
     
-    // public RealTimeUnit(ILogger<RealTimeUnit> logger)
+    // public RealTimeUnit(ILogger<RealTimeUnit> logger, ITagRepository tagRepository, IHubContext<TagHub> hubContext, IAlarmRepository _alarmRepository)
     // {
     //     _logger = logger;
+    //     _tagRepository = tagRepository;
+    //     _hubContext = hubContext;
+    //     _alarmRepository = alarmRepository;
     // }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -39,106 +44,63 @@ public class RealTimeUnit : BackgroundService
         while (!stoppingToken.IsCancellationRequested)
         {
             _logger.LogInformation("RTU Background Service is running.");
-            
-            bool isAnalog = Random.Next(2) == 0;
-            
-            if (isAnalog)
-            {
-                // var tag = GenerateRandomAnalogInput();
-                // _tagRepository.AddAnalogInput(tag);
-                // _logger.LogInformation($"Analog input: Name:{tag.Name}, Description: {tag.Description}, IOAddress: {tag.IOAddress}, Value: {tag.Value}, ScanTime: {tag.ScanTime}, IsScanOn: {tag.IsScanOn}, LowLimit: {tag.LowLimit}, HighLimit: {tag.HighLimit}, Unit: {tag.Unit}");
-                // await _hubContext.Clients.All.SendAsync("AnalogInputUpdate", tag);
+            var digitalInputs = _tagRepository.GetAllDigitalInputs(); 
+            var analogInputs = _tagRepository.GetAllAnalogInputs();
 
-            }
-            else
-            {
-                // var tag = GenerateRandomDigitalInput();
-                // _tagRepository.AddDigitalInput(tag);
-                // _logger.LogInformation($"Digital input: Name:{tag.Name}, Description: {tag.Description}, IOAddress: {tag.IOAddress}, Value: {tag.Value}, ScanTime: {tag.ScanTime}, IsScanOn: {tag.IsScanOn}");
-                // await _hubContext.Clients.All.SendAsync("DigitalInputUpdate", tag);
+            var generateDigitalValuesTasks = digitalInputs.Select(input => GenerateDigitalValuesAsync(input, stoppingToken));
 
-            }
-            
-            await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
+            var generateAnalogValuesTasks = analogInputs.Select(input => GenerateAnalogValuesAsync(input, stoppingToken));
+
+            await Task.WhenAll(generateDigitalValuesTasks.Concat(generateAnalogValuesTasks));
         }
 
         _logger.LogInformation("RTU Background Service is stopping.");
     }
-    
-    // private static AnalogInput GenerateRandomAnalogInput()
-    // {
-    //     int number = Random.Next(1, 4);
-    //     AnalogInput analogInput = new AnalogInput();
-    //     switch (number)
-    //     {
-    //         case 1:
-    //             analogInput.Name = "Analog Temp";
-    //             analogInput.Description = Global.AnalogGlobalValues.TemperatureDescription;
-    //             analogInput.IOAddress = "adresa1";
-    //             analogInput.Value = Random.Next(0, 100);
-    //             analogInput.ScanTime = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss");
-    //             analogInput.IsScanOn = true;
-    //             analogInput.LowLimit = Global.AnalogGlobalValues.TemperatureMinValue;
-    //             analogInput.HighLimit = Global.AnalogGlobalValues.TemperatureMaxValue;
-    //             analogInput.Unit = Global.AnalogGlobalValues.C;
-    //             break;
-    //         
-    //         case 2:
-    //             analogInput.Name = "Analog depth";
-    //             analogInput.Description = Global.AnalogGlobalValues.DepthDescription;
-    //             analogInput.IOAddress = "adresa1";
-    //             analogInput.Value = Random.Next(20, 50);
-    //             analogInput.ScanTime = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss");
-    //             analogInput.IsScanOn = true;
-    //             analogInput.LowLimit = Global.AnalogGlobalValues.DepthMinValue;
-    //             analogInput.HighLimit = Global.AnalogGlobalValues.DepthMaxValue;
-    //             analogInput.Unit = Global.AnalogGlobalValues.M;
-    //             break;
-    //         
-    //         case 3:
-    //             analogInput.Name = "Analog density";
-    //             analogInput.Description = Global.AnalogGlobalValues.DensityDescription;
-    //             analogInput.IOAddress = "adresa1";
-    //             analogInput.Value = Random.Next(900, 1100);
-    //             analogInput.ScanTime = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss");
-    //             analogInput.IsScanOn = true;
-    //             analogInput.LowLimit = Global.AnalogGlobalValues.DepthMinValue;
-    //             analogInput.HighLimit = Global.AnalogGlobalValues.DepthMaxValue;
-    //             analogInput.Unit = Global.AnalogGlobalValues.KgM3;
-    //             break;
-    //
-    //     }
-    //
-    //     return analogInput;
-    // }
-    //
-    // private static DigitalInput GenerateRandomDigitalInput()
-    // {
-    //     
-    //     int number = Random.Next(1, 3);
-    //     DigitalInput digitalInput = new DigitalInput();
-    //     switch (number)
-    //     {
-    //         case 1:
-    //             digitalInput.Name = "Digital open-closed";
-    //             digitalInput.Description = Global.DigitalGlobalValues.OpenClosedDescription;
-    //             digitalInput.IOAddress = "adresa1";
-    //             digitalInput.Value = Random.Next(2);
-    //             digitalInput.ScanTime = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss");
-    //             digitalInput.IsScanOn = true;
-    //             break;
-    //     
-    //         case 2:
-    //             digitalInput.Name = "Digital on-off";
-    //             digitalInput.Description = Global.DigitalGlobalValues.OnOffDescription;
-    //             digitalInput.IOAddress = "adresa1";
-    //             digitalInput.Value = Random.Next(2);
-    //             digitalInput.ScanTime = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss");
-    //             digitalInput.IsScanOn = true;
-    //             break;
-    //             
-    //     }
-    //
-    //     return digitalInput;
-    // }
+
+    private async Task GenerateDigitalValuesAsync(DigitalInput digitalInput, CancellationToken cancellationToken)
+    {
+        while (!cancellationToken.IsCancellationRequested)
+        {
+            DateTime currentTime = DateTime.Now;
+            string currentTimeString = currentTime.ToString("yyyy-MM-ddTHH:mm:ss");
+            int randomValue = Random.Next(2);
+            var tagValue = new TagValue(currentTimeString, randomValue, digitalInput.Id);
+            
+            _tagRepository.AddNewTagValue(tagValue);
+            _tagRepository.UpdateTagValue(digitalInput.Id, randomValue);
+            
+            _logger.LogInformation($"Digital input value: TagId:{tagValue.TagId}, ScanTime: {digitalInput.ScanTime}, TimeStamp: {tagValue.Timestamp}, Value: {tagValue.Value}");
+            
+            await Task.Delay(TimeSpan.FromSeconds(digitalInput.ScanTime), cancellationToken);
+        }
+    }
+
+    private async Task GenerateAnalogValuesAsync(AnalogInput analogInput, CancellationToken cancellationToken)
+    {
+        while (!cancellationToken.IsCancellationRequested)
+        {
+            DateTime currentTime = DateTime.Now;
+            string currentTimeString = currentTime.ToString("yyyy-MM-ddTHH:mm:ss");
+            double minValue = analogInput.LowLimit - 50;
+            double maxValue = analogInput.HighLimit + 50;
+            double randomValue = minValue + (Random.NextDouble() * (maxValue - minValue));
+            var tagValue = new TagValue(currentTimeString, randomValue, analogInput.Id);
+            
+            _tagRepository.AddNewTagValue(tagValue);
+            _tagRepository.UpdateTagValue(analogInput.Id, randomValue);
+            
+            _logger.LogInformation($"Analog input value: TagId:{tagValue.TagId}, ScanTime: {analogInput.ScanTime}, TimeStamp: {tagValue.Timestamp}, Value: {tagValue.Value}");
+
+            //todo: trigerovati alarm
+            // ICollection<Alarm> alarms = _alarmRepository.GetAllAlarmsForInput(analogInput.Id);
+            //
+            // if (randomValue < analogInput.LowLimit)
+            // {
+            //     var alarmActivation = new AlarmActivation();
+            // }
+            
+            await Task.Delay(TimeSpan.FromSeconds(analogInput.ScanTime), cancellationToken);
+        }
+    }
+
 }

@@ -188,30 +188,24 @@ public class TagRepository : ITagRepository
         var tagA = GetAnalogInputTagById(tagId);
         if (tagA != null)
         {
-            if (tagA.IsScanOn == true)
+            if (tagA.IsScanOn)
             {
                 tagA.IsScanOn = false;
                 _context.AnalogInputs.Update(tagA);
                 _context.SaveChanges();
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
-        else
+        var tagD = GetDigitalInputTagById(tagId);
+        if (tagD != null)
         {
-            var tagD = GetDigitalInputTagById(tagId);
-            if (tagD != null)
+            if (tagD.IsScanOn)
             {
-                if (tagD.IsScanOn == true)
-                {
-                    tagD.IsScanOn = false;
-                    _context.DigitalInputs.Update(tagD);
-                    _context.SaveChanges();
-                    return true;
-                }
+                tagD.IsScanOn = false;
+                _context.DigitalInputs.Update(tagD);
+                _context.SaveChanges();
+                return true;
             }
         }
         return false;
@@ -230,23 +224,17 @@ public class TagRepository : ITagRepository
                 _context.SaveChanges();
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
-        else
+        var tagD = GetDigitalInputTagById(tagId);
+        if (tagD != null)
         {
-            var tagD = GetDigitalInputTagById(tagId);
-            if (tagD != null)
+            if (tagD.IsScanOn == false)
             {
-                if (tagD.IsScanOn == false)
-                {
-                    tagD.IsScanOn = true;
-                    _context.DigitalInputs.Update(tagD);
-                    _context.SaveChanges();
-                    return true;
-                }
+                tagD.IsScanOn = true;
+                _context.DigitalInputs.Update(tagD);
+                _context.SaveChanges();
+                return true;
             }
         }
         return false;
@@ -272,5 +260,19 @@ public class TagRepository : ITagRepository
             }
         }
         return allOnScanInputs;
+    }
+
+    public void AddNewTagValue(TagValue tagValue)
+    {
+        _context.TagValues.Add(tagValue);
+        _context.SaveChanges();
+    }
+
+    public void UpdateTagValue(int tagId, double newValue)
+    {
+        var tag = GetTagById(tagId);
+        tag.Value = newValue;
+        _context.Tags.Update(tag);
+        _context.SaveChanges();
     }
 }

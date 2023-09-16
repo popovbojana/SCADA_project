@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using ScadaSnusProject.Model;
+﻿using ScadaSnusProject.Model;
 
 namespace ScadaSnusProject.Repositories.Interfaces;
 
@@ -24,4 +23,6 @@ public interface ITagRepository
     public bool TurnOffScan(int tagId);
     public bool TurnOnScan(int tagId);
     public ICollection<Tag> GetAllOnScanInputs();
+    public void AddNewTagValue(TagValue tagValue);
+    public void UpdateTagValue(int tagId, double newValue);
 }

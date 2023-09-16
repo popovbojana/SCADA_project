@@ -8,5 +8,7 @@ public interface IAlarmRepository
     public Alarm? GetAlarmById(int id);
     public bool AddAlarm(Alarm alarm);
     public bool RemoveAlarm(int id);
+    public void AddNewAlarmActivation(AlarmActivation alarmActivation);
+    public ICollection<Alarm> GetAllAlarmsForInput(int id);
 
 }
