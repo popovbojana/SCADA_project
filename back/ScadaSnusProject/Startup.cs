@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ScadaSnusProject.DbContext;
+using ScadaSnusProject.Hubs;
 using ScadaSnusProject.Repositories;
 using ScadaSnusProject.Repositories.Interfaces;
 using ScadaSnusProject.RTU;
@@ -49,6 +50,11 @@ namespace ScadaSnusProject
             
             //RTU
             services.AddHostedService<RealTimeUnit>();
+            
+            //Hub
+            services.AddSignalR();
+
+            
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -72,8 +78,10 @@ namespace ScadaSnusProject
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<TagHub>("/tagHub");
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
+
             });
         }
     }
