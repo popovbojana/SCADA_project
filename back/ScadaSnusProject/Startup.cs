@@ -44,6 +44,7 @@ namespace ScadaSnusProject
             services.AddSingleton<IUserService, UserService>();
             services.AddSingleton<ITagService, TagService>();
             services.AddSingleton<IAlarmService, AlarmService>();
+            services.AddSingleton<IReportService, ReportService>();
             
             //Controllers
             services.AddControllers();

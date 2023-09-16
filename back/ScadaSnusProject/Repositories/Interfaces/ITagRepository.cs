@@ -1,4 +1,6 @@
-﻿using ScadaSnusProject.Model;
+﻿using System.Collections;
+using ScadaSnusProject.DTOs;
+using ScadaSnusProject.Model;
 
 namespace ScadaSnusProject.Repositories.Interfaces;
 
@@ -25,4 +27,5 @@ public interface ITagRepository
     public ICollection<Tag> GetAllOnScanInputs();
     public void AddNewTagValue(TagValue tagValue);
     public void UpdateTagValue(int tagId, double newValue);
+    public ICollection<TagValue> GetAllTagValuesForTag(int tagId);
 }

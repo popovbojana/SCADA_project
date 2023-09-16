@@ -275,4 +275,19 @@ public class TagRepository : ITagRepository
         _context.Tags.Update(tag);
         _context.SaveChanges();
     }
+
+    public ICollection<TagValue> GetAllTagValuesForTag(int tagId)
+    {
+        List<TagValue> tagValues = new List<TagValue>();
+        foreach (var value in _context.TagValues.ToList())
+        {
+            if (value.TagId == tagId)
+            {
+                tagValues.Add(value);
+            }
+        }
+
+        return tagValues;
+    }
+    
 }

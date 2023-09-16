@@ -66,8 +66,8 @@ public class RealTimeUnit : BackgroundService
             int randomValue = Random.Next(2);
             var tagValue = new TagValue(currentTimeString, randomValue, digitalInput.Id);
             
-            _tagRepository.AddNewTagValue(tagValue);
-            _tagRepository.UpdateTagValue(digitalInput.Id, randomValue);
+            // _tagRepository.AddNewTagValue(tagValue);
+            // _tagRepository.UpdateTagValue(digitalInput.Id, randomValue);
             
             _logger.LogInformation($"Digital input value: TagId:{tagValue.TagId}, ScanTime: {digitalInput.ScanTime}, TimeStamp: {tagValue.Timestamp}, Value: {tagValue.Value}");
             
@@ -86,8 +86,8 @@ public class RealTimeUnit : BackgroundService
             double randomValue = minValue + (Random.NextDouble() * (maxValue - minValue));
             var tagValue = new TagValue(currentTimeString, randomValue, analogInput.Id);
             
-            _tagRepository.AddNewTagValue(tagValue);
-            _tagRepository.UpdateTagValue(analogInput.Id, randomValue);
+            // _tagRepository.AddNewTagValue(tagValue);
+            // _tagRepository.UpdateTagValue(analogInput.Id, randomValue);
             
             _logger.LogInformation($"Analog input value: TagId:{tagValue.TagId}, ScanTime: {analogInput.ScanTime}, TimeStamp: {tagValue.Timestamp}, Value: {tagValue.Value}");
 
