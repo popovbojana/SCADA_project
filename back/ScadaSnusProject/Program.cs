@@ -19,7 +19,7 @@ namespace ScadaSnusProject
                 {
                     dbContext.Database.Migrate();
             
-                    InsertDataIntoDatabase(dbContext);
+                    // InsertDataIntoDatabase(dbContext);
             
                     // RetrieveAllDataFromDatabase(dbContext);
                 }
@@ -41,56 +41,56 @@ namespace ScadaSnusProject
                 });
 
 
-        private static void InsertDataIntoDatabase(AppDbContext dbContext)
-        {
-            var newUser = new User("name", "surname", "username", "password");
-
-            var newTag = new Tag
-            {
-                Name = "ime",
-                Description = "opis",
-                IOAddress = "1",
-                Value = 12.2
-            };
-
-            var newDigitalInput = new DigitalInput
-            {
-                Name = "ime",
-                Description = "opis",
-                IOAddress = "1",
-                Value = 12.2,
-                ScanTime = "2023-09-14T22:12:56",
-                IsScanOn = true
-            };
-
-            dbContext.Users.Add(newUser);
-            dbContext.Tags.Add(newTag);
-            dbContext.DigitalInputs.Add(newDigitalInput);
-            dbContext.SaveChanges();
-        }
-
-        private static void RetrieveAllDataFromDatabase(AppDbContext dbContext)
-        {
-            var allUsers = dbContext.Users.ToList();
-            Console.WriteLine("All Users in the Database:");
-            foreach (var user in allUsers)
-            {
-                Console.WriteLine($"User Id: {user.Id}, Name: {user.Name}, Surname: {user.Surname}, Username: {user.Username}, Password: {user.Password}");
-            }
-            
-            var allTags = dbContext.Tags.ToList();
-            Console.WriteLine("All Tags in the Database:");
-            foreach (var tag in allTags)
-            {
-                Console.WriteLine($"Tag - Id: {tag.Id}, Name: {tag.Name}, Description: {tag.Description}, IOAddress: {tag.IOAddress}, Value: {tag.Value}");
-            }
-            
-            var allDigitalInputs = dbContext.DigitalInputs.ToList();
-            Console.WriteLine("All DigitalInputs in the Database:");
-            foreach (var digitalInput in allDigitalInputs)
-            {
-                Console.WriteLine($"DigitalInputs - Id: {digitalInput.Id}, Name: {digitalInput.Name}, Description: {digitalInput.Description}, IOAddress: {digitalInput.IOAddress}, Value: {digitalInput.Value}, ScanTime: {digitalInput.ScanTime}, IsOn: {digitalInput.IsScanOn}");
-            }
-        }
+        // private static void InsertDataIntoDatabase(AppDbContext dbContext)
+        // {
+        //     var newUser = new User("name", "surname", "username", "password");
+        //
+        //     var newTag = new Tag
+        //     {
+        //         Name = "ime",
+        //         Description = "opis",
+        //         IOAddress = "1",
+        //         Value = 12.2
+        //     };
+        //
+        //     var newDigitalInput = new DigitalInput
+        //     {
+        //         Name = "ime",
+        //         Description = "opis",
+        //         IOAddress = "1",
+        //         Value = 12.2,
+        //         ScanTime = "2023-09-14T22:12:56",
+        //         IsScanOn = true
+        //     };
+        //
+        //     dbContext.Users.Add(newUser);
+        //     dbContext.Tags.Add(newTag);
+        //     dbContext.DigitalInputs.Add(newDigitalInput);
+        //     dbContext.SaveChanges();
+        // }
+        //
+        // private static void RetrieveAllDataFromDatabase(AppDbContext dbContext)
+        // {
+        //     var allUsers = dbContext.Users.ToList();
+        //     Console.WriteLine("All Users in the Database:");
+        //     foreach (var user in allUsers)
+        //     {
+        //         Console.WriteLine($"User Id: {user.Id}, Name: {user.Name}, Surname: {user.Surname}, Username: {user.Username}, Password: {user.Password}");
+        //     }
+        //     
+        //     var allTags = dbContext.Tags.ToList();
+        //     Console.WriteLine("All Tags in the Database:");
+        //     foreach (var tag in allTags)
+        //     {
+        //         Console.WriteLine($"Tag - Id: {tag.Id}, Name: {tag.Name}, Description: {tag.Description}, IOAddress: {tag.IOAddress}, Value: {tag.Value}");
+        //     }
+        //     
+        //     var allDigitalInputs = dbContext.DigitalInputs.ToList();
+        //     Console.WriteLine("All DigitalInputs in the Database:");
+        //     foreach (var digitalInput in allDigitalInputs)
+        //     {
+        //         Console.WriteLine($"DigitalInputs - Id: {digitalInput.Id}, Name: {digitalInput.Name}, Description: {digitalInput.Description}, IOAddress: {digitalInput.IOAddress}, Value: {digitalInput.Value}, ScanTime: {digitalInput.ScanTime}, IsOn: {digitalInput.IsScanOn}");
+        //     }
+        // }
     }
 }

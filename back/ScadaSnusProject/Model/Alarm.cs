@@ -8,16 +8,16 @@ namespace ScadaSnusProject.Model
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum AlarmPriority
     {
-        LOW,
-        MEDIUM,
-        HIGH
+        Low,
+        Medium,
+        High
     }
 
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum AlarmType
     {
-        LOWER,
-        HIGHER
+        Lower,
+        Higher
     }
 
     public class Alarm
@@ -29,8 +29,6 @@ namespace ScadaSnusProject.Model
         public virtual Tag? Tag { get; set; }
         public AlarmType Type { get; set; }
         public AlarmPriority Priority { get; set; }
-        public bool IsActive { get; set; }
-        public string ActivatedTime { get; set; }
         
     }
 }

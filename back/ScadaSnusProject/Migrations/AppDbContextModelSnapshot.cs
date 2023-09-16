@@ -22,13 +22,6 @@ namespace ScadaSnusProject.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("ActivatedTime")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("Priority")
                         .HasColumnType("INTEGER");
 
@@ -46,6 +39,26 @@ namespace ScadaSnusProject.Migrations
                     b.HasIndex("TagId");
 
                     b.ToTable("Alarms");
+                });
+
+            modelBuilder.Entity("ScadaSnusProject.Model.AlarmActivation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("AlarmId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Timestamp")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AlarmId");
+
+                    b.ToTable("AlarmActivations");
                 });
 
             modelBuilder.Entity("ScadaSnusProject.Model.Tag", b =>
@@ -78,6 +91,29 @@ namespace ScadaSnusProject.Migrations
                     b.ToTable("Tags");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("Tag");
+                });
+
+            modelBuilder.Entity("ScadaSnusProject.Model.TagValue", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("TagId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Timestamp")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<double>("Value")
+                        .HasColumnType("REAL");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TagId");
+
+                    b.ToTable("TagValues");
                 });
 
             modelBuilder.Entity("ScadaSnusProject.Model.User", b =>
@@ -123,9 +159,8 @@ namespace ScadaSnusProject.Migrations
                         .HasColumnType("REAL")
                         .HasColumnName("AnalogInput_LowLimit");
 
-                    b.Property<string>("ScanTime")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
+                    b.Property<int>("ScanTime")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("AnalogInput_ScanTime");
 
                     b.Property<string>("Unit")
@@ -160,9 +195,8 @@ namespace ScadaSnusProject.Migrations
                     b.Property<bool>("IsScanOn")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("ScanTime")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("ScanTime")
+                        .HasColumnType("INTEGER");
 
                     b.HasDiscriminator().HasValue("DigitalInput");
                 });
@@ -175,6 +209,28 @@ namespace ScadaSnusProject.Migrations
                 });
 
             modelBuilder.Entity("ScadaSnusProject.Model.Alarm", b =>
+                {
+                    b.HasOne("ScadaSnusProject.Model.Tag", "Tag")
+                        .WithMany()
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Tag");
+                });
+
+            modelBuilder.Entity("ScadaSnusProject.Model.AlarmActivation", b =>
+                {
+                    b.HasOne("ScadaSnusProject.Model.Alarm", "Alarm")
+                        .WithMany()
+                        .HasForeignKey("AlarmId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Alarm");
+                });
+
+            modelBuilder.Entity("ScadaSnusProject.Model.TagValue", b =>
                 {
                     b.HasOne("ScadaSnusProject.Model.Tag", "Tag")
                         .WithMany()

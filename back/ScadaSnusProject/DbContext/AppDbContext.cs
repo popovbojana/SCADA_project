@@ -14,5 +14,7 @@ public class AppDbContext : Microsoft.EntityFrameworkCore.DbContext
     public DbSet<DigitalOutput> DigitalOutputs { get; set; }
     public DbSet<AnalogInput> AnalogInputs { get; set; }
     public DbSet<AnalogOutput> AnalogOutputs { get; set; }
-    
+    public DbSet<TagValue> TagValues { get; set; }
+    public DbSet<AlarmActivation> AlarmActivations { get; set; }
+
 }

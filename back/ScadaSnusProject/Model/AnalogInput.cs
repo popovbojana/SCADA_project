@@ -4,7 +4,7 @@ namespace ScadaSnusProject.Model
 {
     public class AnalogInput : Tag
     {
-        public string ScanTime { get; set; }
+        public int ScanTime { get; set; }
         public bool IsScanOn { get; set; }
         public double LowLimit { get; set; }
         public double HighLimit { get; set; }
