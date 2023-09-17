@@ -19,15 +19,15 @@ public class ReportService : IReportService
 
     public ICollection<TagValue> GetAllTagValuesForTag(int tagId, TimeSortReportDTO dto)
     {
-        // ICollection<TagValue> allTagValues = _tagRepository.GetAllTagValuesForTag(tagId);
-        // if (dto.TimeSort == TimeSort.Desc)
-        // {
-        //     List<TagValue> sortedDescTagValues = allTagValues.OrderByDescending(tv => DateTime.ParseExact(tv.Timestamp, "yyyy-MM-ddTHH:mm:ss", CultureInfo.InvariantCulture)).ToList();
-        //     return sortedDescTagValues;
-        // }
-        // List<TagValue> sortedAscTagValues = allTagValues.OrderBy(tv => DateTime.ParseExact(tv.Timestamp, "yyyy-MM-ddTHH:mm:ss", CultureInfo.InvariantCulture)).ToList();
-        // return sortedAscTagValues;
-        return _tagRepository.GetAllTagValuesForTag(tagId);
+        ICollection<TagValue> allTagValues = _tagRepository.GetAllTagValuesForTag(tagId);
+        if (dto.TimeSort == TimeSort.Desc)
+        {
+            List<TagValue> sortedDescTagValues = allTagValues.OrderByDescending(tv => tv.Timestamp).ToList();
+            return sortedDescTagValues;
+        }
+        List<TagValue> sortedAscTagValues = allTagValues.OrderBy(tv => tv.Timestamp).ToList();
+        return sortedAscTagValues;
+        // return _tagRepository.GetAllTagValuesForTag(tagId);
     }
 
     public ICollection<TagValue> GetAllLastValuesForDigitalInputs(TimeSortReportDTO dto)

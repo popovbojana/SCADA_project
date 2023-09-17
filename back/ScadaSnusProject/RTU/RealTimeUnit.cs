@@ -61,10 +61,10 @@ public class RealTimeUnit : BackgroundService
     {
         while (!cancellationToken.IsCancellationRequested)
         {
-            DateTime currentTime = DateTime.Now;
-            string currentTimeString = currentTime.ToString("yyyy-MM-ddTHH:mm:ss");
+            // DateTime currentTime = DateTime.Now;
+            // string currentTimeString = currentTime.ToString("yyyy-MM-ddTHH:mm:ss");
             int randomValue = Random.Next(2);
-            var tagValue = new TagValue(currentTimeString, randomValue, digitalInput.Id);
+            var tagValue = new TagValue(DateTime.Now, randomValue, digitalInput.Id);
             
             // _tagRepository.AddNewTagValue(tagValue);
             // _tagRepository.UpdateTagValue(digitalInput.Id, randomValue);
@@ -79,12 +79,12 @@ public class RealTimeUnit : BackgroundService
     {
         while (!cancellationToken.IsCancellationRequested)
         {
-            DateTime currentTime = DateTime.Now;
-            string currentTimeString = currentTime.ToString("yyyy-MM-ddTHH:mm:ss");
+            // DateTime currentTime = DateTime.Now;
+            // string currentTimeString = currentTime.ToString("yyyy-MM-ddTHH:mm:ss");
             double minValue = analogInput.LowLimit - 50;
             double maxValue = analogInput.HighLimit + 50;
             double randomValue = minValue + (Random.NextDouble() * (maxValue - minValue));
-            var tagValue = new TagValue(currentTimeString, randomValue, analogInput.Id);
+            var tagValue = new TagValue(DateTime.Now, randomValue, analogInput.Id);
             
             // _tagRepository.AddNewTagValue(tagValue);
             // _tagRepository.UpdateTagValue(analogInput.Id, randomValue);
