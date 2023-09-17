@@ -289,5 +289,10 @@ public class TagRepository : ITagRepository
 
         return tagValues;
     }
-    
+
+    public ICollection<TagValue> GetAllTagValues()
+    {
+        return _context.TagValues.ToList();
+    }
+
 }

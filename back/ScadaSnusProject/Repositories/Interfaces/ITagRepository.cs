@@ -28,4 +28,5 @@ public interface ITagRepository
     public void AddNewTagValue(TagValue tagValue);
     public void UpdateTagValue(int tagId, double newValue);
     public ICollection<TagValue> GetAllTagValuesForTag(int tagId);
+    public ICollection<TagValue> GetAllTagValues();
 }

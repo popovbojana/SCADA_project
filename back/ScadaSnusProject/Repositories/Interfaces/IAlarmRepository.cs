@@ -10,5 +10,6 @@ public interface IAlarmRepository
     public bool RemoveAlarm(int id);
     public void AddNewAlarmActivation(AlarmActivation alarmActivation);
     public ICollection<Alarm> GetAllAlarmsForInput(int id);
+    public ICollection<AlarmActivation> GetAllAlarmActivations();
 
 }

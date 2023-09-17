@@ -41,8 +41,8 @@ namespace ScadaSnusProject
                 });
 
 
-        // private static void InsertDataIntoDatabase(AppDbContext dbContext)
-        // {
+        private static void InsertDataIntoDatabase(AppDbContext dbContext)
+        {
         //     var newUser = new User("name", "surname", "username", "password");
         //
         //     var newTag = new Tag
@@ -66,8 +66,19 @@ namespace ScadaSnusProject
         //     dbContext.Users.Add(newUser);
         //     dbContext.Tags.Add(newTag);
         //     dbContext.DigitalInputs.Add(newDigitalInput);
-        //     dbContext.SaveChanges();
-        // }
+
+        var alarmActivation1 = new AlarmActivation(new DateTime(2023, 9, 17, 19, 15, 24), 1);
+        var alarmActivation2 = new AlarmActivation(new DateTime(2023, 9, 17, 19, 16, 24), 2);
+        var alarmActivation3 = new AlarmActivation(new DateTime(2023, 9, 17, 19, 17, 24), 3);
+        var alarmActivation4 = new AlarmActivation(new DateTime(2023, 9, 17, 19, 18, 24), 1);
+        var alarmActivation5 = new AlarmActivation(new DateTime(2023, 9, 17, 19, 19, 24), 4);
+        dbContext.AlarmActivations.Add(alarmActivation1);
+        dbContext.AlarmActivations.Add(alarmActivation2);
+        dbContext.AlarmActivations.Add(alarmActivation3);
+        dbContext.AlarmActivations.Add(alarmActivation4);
+        dbContext.AlarmActivations.Add(alarmActivation5);
+        dbContext.SaveChanges();
+        }
         //
         // private static void RetrieveAllDataFromDatabase(AppDbContext dbContext)
         // {

@@ -11,5 +11,5 @@ public enum TimeSort
 
 public class TimeSortReportDTO
 {
-    public TimeSort TimeSort;
+    public TimeSort TimeSort { get; set; }
 }

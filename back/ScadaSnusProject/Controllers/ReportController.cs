@@ -14,55 +14,40 @@ public class ReportController : Controller
     {
         _reportService = reportService;
     }
-    
-    // [HttpPost]
-    // [Route("registration")]
-    // public ActionResult Registration(RegisterUserDTO registerUser)
-    // {
-    //     try
-    //     {
-    //         var user = _userService.RegisterNewUser(registerUser);
-    //         return Ok( new {Message = $"Successfully registered as {user.Username}!" });
-    //     }
-    //     catch (Exception e)
-    //     {
-    //         return BadRequest(new { e.Message });
-    //     }
-    // }
 
     [HttpGet]
     [Route("alarms-timespan")]
-    public ActionResult GetAllAlarmsInTimespan()
+    public ActionResult GetAllAlarmsInTimespan(TimeSortAndAlarmSortWithTimeSpanDTO dto)
     {
-        return null;
+        return Ok(_reportService.GetAllAlarmsInTimespan(dto));
     }
 
     [HttpGet]
     [Route("alarms-priority")]
-    public ActionResult GetAllAlarmsOfPriority()
+    public ActionResult GetAllAlarmsOfPriority(TimeSortAndAlarmPriorityDTO dto)
     {
-        return null;
+        return Ok(_reportService.GetAllAlarmsOfPriority(dto));
     }
 
     [HttpGet]
     [Route("tag-values-timespan")]
-    public ActionResult GetAllTagValuesInTimeSpan()
+    public ActionResult GetAllTagValuesInTimeSpan(TimeSortWithTimeSpanDTO dto)
     {
-        return null;
+        return Ok(_reportService.GetAllTagValuesInTimeSpan(dto));
     }
 
     [HttpGet]
     [Route("last-values-analog-inputs")]
-    public ActionResult GetAllLastValuesForAnalogInputs()
+    public ActionResult GetAllLastValuesForAnalogInputs(TimeSortReportDTO dto)
     {
-        return null;
+        return Ok(_reportService.GetAllLastValuesForAnalogInputs(dto));
     }
 
     [HttpGet]
     [Route("last-values-digital-inputs")]
     public ActionResult GetAllLastValuesForDigitalInputs(TimeSortReportDTO dto)
     {
-        return null;
+        return Ok(_reportService.GetAllLastValuesForDigitalInputs(dto));
     }
 
     [HttpGet]

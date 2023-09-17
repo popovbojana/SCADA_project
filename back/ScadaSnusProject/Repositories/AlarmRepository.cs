@@ -68,4 +68,9 @@ public class AlarmRepository : IAlarmRepository
 
         return alarms;
     }
+
+    public ICollection<AlarmActivation> GetAllAlarmActivations()
+    {
+        return _context.AlarmActivations.ToList();
+    }
 }
