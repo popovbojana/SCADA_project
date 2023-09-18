@@ -1,46 +1,41 @@
-/* Resetovanje stilova za bolji cross-browser rendering */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
   }
-  
-  /* Osnovni stil za navbar */
+
   .navbar {
-    background-color: #333; /* Boja pozadine */
-    color: #fff; /* Boja teksta */
-    padding: 10px 0; /* Prostor između sadržaja i navbar-a */
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 0;
   }
   
-  /* Container za navbar elemente */
   .navbar-container {
-    max-width: 1200px; /* Maksimalna širina containera */
-    margin: 0 auto; /* Centriranje containera */
+    max-width: 1200px;
+    margin: 0 auto;
     display: flex;
-    justify-content: space-between; /* Poravnanje elemenata levo i desno */
-    align-items: center; /* Vertikalno centriranje elemenata */
+    justify-content: space-between;
+    align-items: center;
   }
   
-  /* Stil za brand/logo */
   .navbar-brand a {
     color: #fff;
-    text-decoration: none; /* Uklonite podvučeni stil za linkove */
-    font-weight: bold; /* Debljina fonta */
-    font-size: 24px; /* Veličina fonta */
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 24px;
   }
   
-  /* Stil za meni stavke */
   .navbar-menu {
-    list-style: none; /* Uklonite tačke kod liste */
+    list-style: none; 
     display: flex;
   }
   
   .navbar-item {
-    margin-right: 20px; /* Prostor između stavki */
+    margin-right: 20px;
   }
   
   .navbar-item:last-child {
-    margin-right: 0; /* Bez margine za poslednju stavku */
+    margin-right: 0;
   }
   
   .navbar-item a {
