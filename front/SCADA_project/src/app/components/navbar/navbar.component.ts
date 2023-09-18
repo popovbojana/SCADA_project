@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
@@ -7,26 +8,21 @@ import { UserService } from 'src/app/services/user/user.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  logged: string = 'n';
-  user: string = '';
-  isLoggedIn: boolean = false;
+  role: string = 'notLoggedIn';
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
-    this.userService.isLoggedIn$.subscribe((loggedIn) => {
-      this.isLoggedIn = loggedIn;
-      if (this.isLoggedIn) {
-        this.logged = 'y';
-        this.user = localStorage.getItem('user')!;
-      } else {
-        this.logged = 'n';
-      }
-    });
+    if(this.userService.isLoggedIn()){
+      this.role = 'loggedIn';
+    }
   }
 
   logout() {
-    this.userService.logout();
+    this.role = 'notLoggedIn';
+    localStorage.removeItem('user');
+    this.userService.setUser();
+    this.router.navigate(['login']);
   }
 
 }

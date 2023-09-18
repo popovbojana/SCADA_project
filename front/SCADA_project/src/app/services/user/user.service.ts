@@ -1,34 +1,51 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { environment } from 'src/enviroments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private isLoggedInSubject = new Subject<boolean>();
+  user$ = new BehaviorSubject(null);
+  userState$ = this.user$.asObservable();
 
-  isLoggedIn$ = this.isLoggedInSubject.asObservable();
+  constructor(private http: HttpClient) { 
+    this.user$.next(this.getRole());
+  }
 
-  constructor(private http: HttpClient) { }
+  getRole(): any {
+    if (this.isLoggedIn()) {
+      const role: string = localStorage.getItem('user')!; 
+      return role;
+    }
+    return null;
+  }
+
+  isLoggedIn(): boolean {
+    if (localStorage.getItem('user') != null) {
+      return true;
+    }
+    return false;
+  }
+
+  setUser(): void {
+    this.user$.next(this.getRole());
+  }
 
   registration(registration: RegisterUserDTO): Observable<any> {
     return this.http.post<any>(environment.apiHost + 'user/registration', registration);
   }
 
   login(credentials: LoginCredentialsDTO): Observable<any> {
-    this.isLoggedInSubject.next(true);
-    localStorage.setItem("user", credentials.Username);
-    localStorage.setItem("isLoggedIn", "y");
     return this.http.post<any>(environment.apiHost + 'user/login', credentials);
   }
 
-  logout() {
-    localStorage.setItem("user", '');
-    localStorage.setItem("isLoggedIn", "n");
-    this.isLoggedInSubject.next(false);
-  }
+  // logout() {
+  //   localStorage.setItem("user", '');
+  //   localStorage.setItem("isLoggedIn", "n");
+  //   this.isLoggedInSubject.next(false);
+  // }
 
 }
 

@@ -1,5 +1,5 @@
 <nav class="navbar">
-    <div class="navbar-container" *ngIf="logged == 'n'">
+    <div class="navbar-container" *ngIf="role == 'notLoggedIn'">
       <div class="navbar-brand">
         <a href="#">SCADA</a>
       </div>
@@ -15,9 +15,9 @@
         </li>
       </ul>
     </div>
-    <div class="navbar-container" *ngIf="logged == 'y'">
+    <div class="navbar-container" *ngIf="role == 'loggedIn'">
       <div class="navbar-brand">
-        <a href="#">{{user}} as SCADA manager</a>
+        <a href="#">SCADA</a>
       </div>
       <ul class="navbar-menu">
         <li class="navbar-item">
