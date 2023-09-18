@@ -30,3 +30,9 @@ export interface Alarm{
   type: string,
   priority: string
 }
+
+export interface AlarmActivation{
+  id: number,
+  timestamp: string,
+  alarmId: number
+}
