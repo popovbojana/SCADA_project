@@ -60,7 +60,7 @@ public class RealTimeUnit : BackgroundService
             
             _logger.LogInformation($"Digital input value: TagId:{tagValue.TagId}, ScanTime: {digitalInput.ScanTime}, TimeStamp: {tagValue.Timestamp}, Value: {tagValue.Value}");
             
-            await _alarmHub.Clients.All.SendAsync("ReceiveRealTimeData", $"Digital input value: TagId:{tagValue.TagId}, ScanTime: {digitalInput.ScanTime}, TimeStamp: {tagValue.Timestamp}, Value: {tagValue.Value}");
+            await _alarmHub.Clients.All.SendAsync("ReceiveTagValue", tagValue);
 
             await Task.Delay(TimeSpan.FromSeconds(digitalInput.ScanTime), cancellationToken);
         }
@@ -85,6 +85,7 @@ public class RealTimeUnit : BackgroundService
                 ActivateAlarm(analogInput, randomValue, DateTime.Now, listAlarms);
             }
 
+            await _alarmHub.Clients.All.SendAsync("ReceiveTagValue", tagValue);
             await Task.Delay(TimeSpan.FromSeconds(analogInput.ScanTime), cancellationToken);
         }
     }
@@ -185,43 +186,74 @@ public class RealTimeUnit : BackgroundService
         }
     }*/
 
-    private void ActivateAlarm(AnalogInput analogInput, double value, DateTime currentTime, List<Alarm> alarms)
+    private async void ActivateAlarm(AnalogInput analogInput, double value, DateTime currentTime, List<Alarm> alarms)
     {
         if (value <= alarms[0].Value && value > alarms[1].Value)
         {
             var alarmActivation = new AlarmActivation(currentTime, alarms[0].Id, analogInput.Id, value); 
             _alarmRepository.AddNewAlarmActivation(alarmActivation); 
             _logger.LogInformation("ACTIVATED: " + alarmActivation.Tag.Id + " Alarm " + alarmActivation.Alarm.Id + " Value " +alarmActivation.Value);
+            await _alarmHub.Clients.All.SendAsync("ReceiveAlarmActivation", alarmActivation);
+            await WriteAlarmActivationToFile(alarmActivation);
         }
         else if (value <= alarms[1].Value && value > alarms[2].Value)
         {
             var alarmActivation = new AlarmActivation(currentTime, alarms[1].Id, analogInput.Id, value); 
             _alarmRepository.AddNewAlarmActivation(alarmActivation); 
             _logger.LogInformation("ACTIVATED: " + alarmActivation.Tag.Id + " Alarm " + alarmActivation.Alarm.Id + " Value " +alarmActivation.Value);
+            await _alarmHub.Clients.All.SendAsync("ReceiveAlarmActivation", alarmActivation);
+            await WriteAlarmActivationToFile(alarmActivation);
         }
         else if (value <= alarms[2].Value)
         {
             var alarmActivation = new AlarmActivation(currentTime, alarms[2].Id, analogInput.Id, value); 
             _alarmRepository.AddNewAlarmActivation(alarmActivation); 
             _logger.LogInformation("ACTIVATED: " + alarmActivation.Tag.Id + " Alarm " + alarmActivation.Alarm.Id + " Value " +alarmActivation.Value);
+            await _alarmHub.Clients.All.SendAsync("ReceiveAlarmActivation", alarmActivation);
+            await WriteAlarmActivationToFile(alarmActivation);
         }
         else if (value >= alarms[3].Value && value < alarms[4].Value)
         { 
             var alarmActivation = new AlarmActivation(currentTime, alarms[3].Id, analogInput.Id, value); 
             _alarmRepository.AddNewAlarmActivation(alarmActivation); 
             _logger.LogInformation("ACTIVATED: " + alarmActivation.Tag.Id + " Alarm " + alarmActivation.Alarm.Id + " Value " +alarmActivation.Value);
+            await _alarmHub.Clients.All.SendAsync("ReceiveAlarmActivation", alarmActivation);
+            await WriteAlarmActivationToFile(alarmActivation);
         }
         else if (value >= alarms[4].Value && value < alarms[5].Value) 
         { 
             var alarmActivation = new AlarmActivation(currentTime, alarms[4].Id, analogInput.Id, value); 
             _alarmRepository.AddNewAlarmActivation(alarmActivation); 
             _logger.LogInformation("ACTIVATED: " + alarmActivation.Tag.Id + " Alarm " + alarmActivation.Alarm.Id + " Value " +alarmActivation.Value);
+            await _alarmHub.Clients.All.SendAsync("ReceiveAlarmActivation", alarmActivation);
+            await WriteAlarmActivationToFile(alarmActivation);
         }
         else if (value >= alarms[5].Value) 
         { 
             var alarmActivation = new AlarmActivation(currentTime, alarms[5].Id, analogInput.Id, value); 
             _alarmRepository.AddNewAlarmActivation(alarmActivation); 
             _logger.LogInformation("ACTIVATED: " + alarmActivation.Tag.Id + " Alarm " + alarmActivation.Alarm.Id + " Value " +alarmActivation.Value);
+            await _alarmHub.Clients.All.SendAsync("ReceiveAlarmActivation", alarmActivation);
+            await WriteAlarmActivationToFile(alarmActivation);
+        }
+    }
+    
+    private async Task WriteAlarmActivationToFile(AlarmActivation alarmActivation)
+    {
+        string filePath = "alarm_activations.txt";
+
+        try
+        {
+            using (StreamWriter writer = File.AppendText(filePath))
+            {
+                string logMessage = $"ACTIVATED: TagId {alarmActivation.Tag.Id}, Alarm {alarmActivation.Alarm.Id}, Value {alarmActivation.Value}, TimeStamp {alarmActivation.Timestamp}";
+                await writer.WriteLineAsync(logMessage);
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Error writing to file: {ex.Message}");
         }
     }
 }
+

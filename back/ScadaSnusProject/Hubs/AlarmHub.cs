@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
+using ScadaSnusProject.Model;
 
 namespace ScadaSnusProject.Hubs;
 
 public class AlarmHub : Hub
 {
-    public async Task SendAlarmActivation(string data)
+    public async Task SendAlarmActivation(AlarmActivation alarmActivation)
     {
-        await Clients.All.SendAsync("ReceiveRealTimeData", data);
+        await Clients.All.SendAsync("ReceiveAlarmActivation", alarmActivation);
     }
 }
