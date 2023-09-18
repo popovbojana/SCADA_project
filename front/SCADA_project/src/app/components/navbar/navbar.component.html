@@ -1,5 +1,5 @@
 <nav class="navbar">
-    <div class="navbar-container">
+    <div class="navbar-container" *ngIf="role == 'notLoggedIn'">
       <div class="navbar-brand">
         <a href="#">SCADA</a>
       </div>
@@ -13,6 +13,16 @@
         <li class="navbar-item">
           <a href="trending">Trending</a>
         </li>
+      </ul>
+    </div>
+    <div class="navbar-container" *ngIf="role == 'loggedIn'">
+      <div class="navbar-brand">
+        <a href="#">SCADA</a>
+      </div>
+      <ul class="navbar-menu">
+        <li class="navbar-item">
+          <a href="trending">Trending</a>
+        </li>
         <li class="navbar-item">
             <a href="tags">Tags</a>
         </li>
@@ -22,6 +32,9 @@
         <li class="navbar-item">
             <a href="reports">Reports</a>
         </li>
+        <li class="navbar-item">
+          <a (click)="logout()">Logout</a>
+      </li>
       </ul>
     </div>
   </nav>
