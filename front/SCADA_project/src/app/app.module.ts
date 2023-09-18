@@ -10,6 +10,8 @@ import { TrendingComponent } from './components/trending/trending.component';
 import { TagsComponent } from './components/tags/tags.component';
 import { AlarmsComponent } from './components/alarms/alarms.component';
 import { ReportsComponent } from './components/reports/reports.component';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,11 +22,13 @@ import { ReportsComponent } from './components/reports/reports.component';
     TrendingComponent,
     TagsComponent,
     AlarmsComponent,
-    ReportsComponent
+    ReportsComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

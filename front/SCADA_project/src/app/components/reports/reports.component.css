@@ -1,0 +1,90 @@
+.reports-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.reports-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.centered .form-group {
+    margin-bottom: 15px;
+}
+
+.centered label {
+    display: block;
+    font-weight: bold;
+}
+
+.centered select,
+.centered input[type="date"],
+.centered button {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.centered button {
+    display: block;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.centered button:hover {
+    background-color: #0056b3;
+}
+
+.centered button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.compact-form .form-group {
+    margin-bottom: 15px;
+}
+
+.compact-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.compact-form select,
+.compact-form input[type="datetime-local"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.compact-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.compact-form button:hover {
+    background-color: #0056b3;
+}
