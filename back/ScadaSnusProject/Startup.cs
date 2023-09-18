@@ -54,6 +54,17 @@ namespace ScadaSnusProject
             
             //Hub
             services.AddSignalR();
+            
+            // Inside the ConfigureServices method of Startup.cs
+            services.AddSignalR(options =>
+                {
+                    options.EnableDetailedErrors = true; // Enable detailed error messages (optional)
+                })
+                .AddHubOptions<AlarmHub>(options =>
+                {
+                    options.EnableDetailedErrors = true; // Enable detailed error messages for your specific hub (optional)
+                });
+
 
             //CORS
             services.AddCors(options =>
@@ -89,9 +100,10 @@ namespace ScadaSnusProject
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHub<TagHub>("/tagHub");
+                endpoints.MapHub<AlarmHub>("/alarmHub");
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
+                endpoints.MapFallbackToFile("index.html");
 
             });
         }

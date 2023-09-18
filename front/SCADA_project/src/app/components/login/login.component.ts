@@ -21,11 +21,6 @@ export class LoginComponent {
 
     this.userService.login(userCredentials).subscribe((response) => {
       alert(response.message);
-      localStorage.setItem('user', 'loggedIn');
-      this.userService.setUser();
-      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-        window.location.reload();
-      });
       this.router.navigate(['trending']);
     },
     (error) => {

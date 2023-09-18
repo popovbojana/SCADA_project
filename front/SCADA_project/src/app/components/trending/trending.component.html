@@ -1,1 +1,33 @@
-<p>trending works!</p>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SignalR Example</title>
+</head>
+<body>
+    <h1>Real-Time Dat aa:</h1>
+    <ul id="dataList"></ul>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.12/signalr.min.js"></script>
+    <script>
+const connection = new signalR.HubConnectionBuilder()
+    .withUrl("/alarmHub", {
+        transport: signalR.HttpTransportType.WebSockets, // Use WebSocket transport
+        skipNegotiation: true, // Skip negotiation step if using WebSocket transport
+    })
+    .build();
+
+        connection.start().then(() => {
+            console.log("Connected to the hub.");
+        }).catch(err => {
+            console.error(err);
+        });
+
+        connection.on("ReceiveRealTimeData", data => {
+            const dataList = document.getElementById("dataList");
+            const listItem = document.createElement("li");
+            listItem.textContent = data;
+            dataList.appendChild(listItem);
+        });
+    </script>
+</body>
+</html>

@@ -1,7 +1,5 @@
-﻿// using Microsoft.AspNetCore.SignalR;
-// using ScadaSnusProject.Hubs;
-
-using System.Collections.ObjectModel;
+﻿using Microsoft.AspNetCore.SignalR;
+using ScadaSnusProject.Hubs;
 using ScadaSnusProject.Model;
 using ScadaSnusProject.Repositories.Interfaces;
 
@@ -16,17 +14,97 @@ using System.Threading.Tasks;
 public class RealTimeUnit : BackgroundService
 {
     private readonly ILogger<RealTimeUnit> _logger;
-    private static readonly Random Random = new Random();
     private readonly ITagRepository _tagRepository;
-
     private readonly IAlarmRepository _alarmRepository;
-    // private readonly IHubContext<TagHub> _hubContext;
+    private readonly Random _random = new Random();
+    private readonly IHubContext<AlarmHub> _alarmHub;
 
-    public RealTimeUnit(ILogger<RealTimeUnit> logger, ITagRepository tagRepository, IAlarmRepository alarmRepository)
+
+    public RealTimeUnit(
+        ILogger<RealTimeUnit> logger,
+        ITagRepository tagRepository,
+        IAlarmRepository alarmRepository,
+        IHubContext<AlarmHub> alarmHub)
     {
         _logger = logger;
         _tagRepository = tagRepository;
         _alarmRepository = alarmRepository;
+        _alarmHub = alarmHub;
+    }
+
+    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    {
+        _logger.LogInformation("RTU Background Service is starting.");
+
+        while (!stoppingToken.IsCancellationRequested)
+        {
+            _logger.LogInformation("RTU Background Service is running.");
+            var digitalInputs = _tagRepository.GetAllDigitalInputs();
+            var analogInputs = _tagRepository.GetAllAnalogInputs();
+
+            var generateDigitalValuesTasks = digitalInputs.Select(input => GenerateDigitalValuesAsync(input, stoppingToken));
+            var generateAnalogValuesTasks = analogInputs.Select(input => GenerateAnalogValuesAsync(input, stoppingToken));
+
+            await Task.WhenAll(generateDigitalValuesTasks.Concat(generateAnalogValuesTasks));
+        }
+
+        _logger.LogInformation("RTU Background Service is stopping.");
+    }
+
+    private async Task GenerateDigitalValuesAsync(DigitalInput digitalInput, CancellationToken cancellationToken)
+    {
+        while (!cancellationToken.IsCancellationRequested)
+        {
+            int randomValue = _random.Next(2);
+            var tagValue = new TagValue(DateTime.Now, randomValue, digitalInput.Id);
+            
+            _logger.LogInformation($"Digital input value: TagId:{tagValue.TagId}, ScanTime: {digitalInput.ScanTime}, TimeStamp: {tagValue.Timestamp}, Value: {tagValue.Value}");
+            
+            await _alarmHub.Clients.All.SendAsync("ReceiveRealTimeData", $"Digital input value: TagId:{tagValue.TagId}, ScanTime: {digitalInput.ScanTime}, TimeStamp: {tagValue.Timestamp}, Value: {tagValue.Value}");
+
+            await Task.Delay(TimeSpan.FromSeconds(digitalInput.ScanTime), cancellationToken);
+        }
+    }
+
+    private async Task GenerateAnalogValuesAsync(AnalogInput analogInput, CancellationToken cancellationToken)
+    {
+        while (!cancellationToken.IsCancellationRequested)
+        {
+            double minValue = analogInput.LowLimit - 50;
+            double maxValue = analogInput.HighLimit + 50;
+            double randomValue = minValue + (_random.NextDouble() * (maxValue - minValue));
+            var tagValue = new TagValue(DateTime.Now, randomValue, analogInput.Id);
+
+            _logger.LogInformation($"Analog input value: TagId:{tagValue.TagId}, ScanTime: {analogInput.ScanTime}, TimeStamp: {tagValue.Timestamp}, Value: {tagValue.Value}");
+
+            ICollection<Alarm> alarms = _alarmRepository.GetAllAlarmsForInput(analogInput.Id);
+            List<Alarm> listAlarms = alarms.ToList();
+
+            if (randomValue <= analogInput.LowLimit || randomValue >= analogInput.HighLimit)
+            {
+                ActivateAlarm(analogInput, randomValue, DateTime.Now, listAlarms);
+            }
+
+            await Task.Delay(TimeSpan.FromSeconds(analogInput.ScanTime), cancellationToken);
+        }
+    }
+
+/*public class RealTimeUnit : BackgroundService
+{
+    private readonly ILogger<RealTimeUnit> _logger;
+    private static readonly Random Random = new Random();
+    private readonly ITagRepository _tagRepository;
+
+    private readonly IAlarmRepository _alarmRepository;
+    private readonly IHubContext<AlarmHub> _alarmHubContext;
+    // private readonly IHubContext<TagHub> _hubContext;
+
+    public RealTimeUnit(ILogger<RealTimeUnit> logger, ITagRepository tagRepository, IAlarmRepository alarmRepository, IHubContext<AlarmHub> alarmHubContext)
+    {
+        _logger = logger;
+        _tagRepository = tagRepository;
+        _alarmRepository = alarmRepository;
+        _alarmHubContext = alarmHubContext;
     }
     
     // public RealTimeUnit(ILogger<RealTimeUnit> logger, ITagRepository tagRepository, IHubContext<TagHub> hubContext, IAlarmRepository _alarmRepository)
@@ -105,7 +183,7 @@ public class RealTimeUnit : BackgroundService
         {
             _logger.LogInformation("Id " + alarm.Id + " value " + alarm.Value);
         }
-    }
+    }*/
 
     private void ActivateAlarm(AnalogInput analogInput, double value, DateTime currentTime, List<Alarm> alarms)
     {
@@ -132,14 +210,12 @@ public class RealTimeUnit : BackgroundService
             var alarmActivation = new AlarmActivation(currentTime, alarms[3].Id, analogInput.Id, value); 
             _alarmRepository.AddNewAlarmActivation(alarmActivation); 
             _logger.LogInformation("ACTIVATED: " + alarmActivation.Tag.Id + " Alarm " + alarmActivation.Alarm.Id + " Value " +alarmActivation.Value);
-
         }
         else if (value >= alarms[4].Value && value < alarms[5].Value) 
         { 
             var alarmActivation = new AlarmActivation(currentTime, alarms[4].Id, analogInput.Id, value); 
             _alarmRepository.AddNewAlarmActivation(alarmActivation); 
             _logger.LogInformation("ACTIVATED: " + alarmActivation.Tag.Id + " Alarm " + alarmActivation.Alarm.Id + " Value " +alarmActivation.Value);
-
         }
         else if (value >= alarms[5].Value) 
         { 
