@@ -1,1 +1,52 @@
-<p>alarms works!</p>
+<div class="alarms-container">
+    <h2>Alarms</h2>
+
+    <div>
+        <table class="alarms-table">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Value</th>
+                <th>Tag Id</th>
+                <th>Type</th>
+                <th>Priority</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let alarm of allAlarms">
+                <td>{{ alarm.id }}</td>
+                <td>{{ alarm.value }}</td>
+                <td>{{ alarm.tagId }}</td>
+                <td>{{ alarm.type }}</td>
+                <td>{{ alarm.priority }}</td>
+                <td><button (click)="deleteAlarm(alarm.id!)">Delete</button></td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+    <button (click)="showAddAlarmForm = true" >Add New</button>
+
+          <div *ngIf="showAddAlarmForm" class="alarms-form">
+            <h3>Add New Alarm</h3>
+            <form>
+                <div class="form-group">
+                    <label for="value">Value: </label>
+                    <input type="text" id="value" [(ngModel)]="value" name="value" required>
+                </div>
+                <div class="form-group">
+                    <label for="tagId">Tag Id</label>
+                    <input type="text" id="tagId" [(ngModel)]="tagId" name="tagId" required>
+                </div>
+                <div class="form-group">
+                    <label for="type">Type: </label>
+                    <input type="text" id="type" [(ngModel)]="type" name="type" required>
+                </div>
+                <div class="form-group">
+                    <label for="priority">Priority: </label>
+                    <input type="text" id="priority" [(ngModel)]="priority" name="priority" required>
+                </div>
+                <button (click)="addAlarm()">Save</button>
+            </form>
+        </div>
+
+</div>
