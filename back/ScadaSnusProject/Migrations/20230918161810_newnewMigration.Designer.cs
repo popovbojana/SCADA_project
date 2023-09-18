@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ScadaSnusProject.DbContext;
 
@@ -10,9 +11,10 @@ using ScadaSnusProject.DbContext;
 namespace ScadaSnusProject.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230918161810_newnewMigration")]
+    partial class newnewMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.0");
@@ -51,20 +53,12 @@ namespace ScadaSnusProject.Migrations
                     b.Property<int>("AlarmId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("TagId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("TEXT");
-
-                    b.Property<double>("Value")
-                        .HasColumnType("REAL");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AlarmId");
-
-                    b.HasIndex("TagId");
 
                     b.ToTable("AlarmActivations");
                 });
@@ -234,15 +228,7 @@ namespace ScadaSnusProject.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ScadaSnusProject.Model.Tag", "Tag")
-                        .WithMany()
-                        .HasForeignKey("TagId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Alarm");
-
-                    b.Navigation("Tag");
                 });
 
             modelBuilder.Entity("ScadaSnusProject.Model.TagValue", b =>

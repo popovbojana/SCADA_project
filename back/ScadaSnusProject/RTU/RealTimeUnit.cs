@@ -61,8 +61,6 @@ public class RealTimeUnit : BackgroundService
     {
         while (!cancellationToken.IsCancellationRequested)
         {
-            // DateTime currentTime = DateTime.Now;
-            // string currentTimeString = currentTime.ToString("yyyy-MM-ddTHH:mm:ss");
             int randomValue = Random.Next(2);
             var tagValue = new TagValue(DateTime.Now, randomValue, digitalInput.Id);
             
@@ -79,8 +77,6 @@ public class RealTimeUnit : BackgroundService
     {
         while (!cancellationToken.IsCancellationRequested)
         {
-            // DateTime currentTime = DateTime.Now;
-            // string currentTimeString = currentTime.ToString("yyyy-MM-ddTHH:mm:ss");
             double minValue = analogInput.LowLimit - 50;
             double maxValue = analogInput.HighLimit + 50;
             double randomValue = minValue + (Random.NextDouble() * (maxValue - minValue));
@@ -91,16 +87,65 @@ public class RealTimeUnit : BackgroundService
 
             _logger.LogInformation($"Analog input value: TagId:{tagValue.TagId}, ScanTime: {analogInput.ScanTime}, TimeStamp: {tagValue.Timestamp}, Value: {tagValue.Value}");
 
-            //todo: trigerovati alarm
-            // ICollection<Alarm> alarms = _alarmRepository.GetAllAlarmsForInput(analogInput.Id);
-            //
-            // if (randomValue < analogInput.LowLimit)
-            // {
-            //     var alarmActivation = new AlarmActivation();
-            // }
-            
+            ICollection<Alarm> alarms = _alarmRepository.GetAllAlarmsForInput(analogInput.Id);
+            List<Alarm> listAlarms = alarms.ToList();
+
+            if (randomValue <= analogInput.LowLimit || randomValue >= analogInput.HighLimit)
+            {
+                ActivateAlarm(analogInput, randomValue, DateTime.Now, listAlarms);
+            }
+
             await Task.Delay(TimeSpan.FromSeconds(analogInput.ScanTime), cancellationToken);
         }
     }
 
+    private void PrintAlarmsOfTag(List<Alarm> alarms)
+    {
+        foreach (var alarm in alarms)
+        {
+            _logger.LogInformation("Id " + alarm.Id + " value " + alarm.Value);
+        }
+    }
+
+    private void ActivateAlarm(AnalogInput analogInput, double value, DateTime currentTime, List<Alarm> alarms)
+    {
+        if (value <= alarms[0].Value && value > alarms[1].Value)
+        {
+            var alarmActivation = new AlarmActivation(currentTime, alarms[0].Id, analogInput.Id, value); 
+            _alarmRepository.AddNewAlarmActivation(alarmActivation); 
+            _logger.LogInformation("ACTIVATED: " + alarmActivation.Tag.Id + " Alarm " + alarmActivation.Alarm.Id + " Value " +alarmActivation.Value);
+        }
+        else if (value <= alarms[1].Value && value > alarms[2].Value)
+        {
+            var alarmActivation = new AlarmActivation(currentTime, alarms[1].Id, analogInput.Id, value); 
+            _alarmRepository.AddNewAlarmActivation(alarmActivation); 
+            _logger.LogInformation("ACTIVATED: " + alarmActivation.Tag.Id + " Alarm " + alarmActivation.Alarm.Id + " Value " +alarmActivation.Value);
+        }
+        else if (value <= alarms[2].Value)
+        {
+            var alarmActivation = new AlarmActivation(currentTime, alarms[2].Id, analogInput.Id, value); 
+            _alarmRepository.AddNewAlarmActivation(alarmActivation); 
+            _logger.LogInformation("ACTIVATED: " + alarmActivation.Tag.Id + " Alarm " + alarmActivation.Alarm.Id + " Value " +alarmActivation.Value);
+        }
+        else if (value >= alarms[3].Value && value < alarms[4].Value)
+        { 
+            var alarmActivation = new AlarmActivation(currentTime, alarms[3].Id, analogInput.Id, value); 
+            _alarmRepository.AddNewAlarmActivation(alarmActivation); 
+            _logger.LogInformation("ACTIVATED: " + alarmActivation.Tag.Id + " Alarm " + alarmActivation.Alarm.Id + " Value " +alarmActivation.Value);
+
+        }
+        else if (value >= alarms[4].Value && value < alarms[5].Value) 
+        { 
+            var alarmActivation = new AlarmActivation(currentTime, alarms[4].Id, analogInput.Id, value); 
+            _alarmRepository.AddNewAlarmActivation(alarmActivation); 
+            _logger.LogInformation("ACTIVATED: " + alarmActivation.Tag.Id + " Alarm " + alarmActivation.Alarm.Id + " Value " +alarmActivation.Value);
+
+        }
+        else if (value >= alarms[5].Value) 
+        { 
+            var alarmActivation = new AlarmActivation(currentTime, alarms[5].Id, analogInput.Id, value); 
+            _alarmRepository.AddNewAlarmActivation(alarmActivation); 
+            _logger.LogInformation("ACTIVATED: " + alarmActivation.Tag.Id + " Alarm " + alarmActivation.Alarm.Id + " Value " +alarmActivation.Value);
+        }
+    }
 }

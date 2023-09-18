@@ -26,8 +26,10 @@ namespace ScadaSnusProject
                 {
                     dbContext.Database.Migrate();
 
+                    // ClearAlarmsFromDatabase(dbContext);
+
                     // InsertAlarmsIntoDatabase(dbContext);
-                    
+
                     // InsertDataIntoDatabase(dbContext);
 
                     // RetrieveAllDataFromDatabase(dbContext);
@@ -297,6 +299,16 @@ namespace ScadaSnusProject
             dbContext.Alarms.Add(temperatureAlarmHigherMedium);
             dbContext.Alarms.Add(temperatureAlarmHigherHigh);
 
+            dbContext.SaveChanges();
+        }
+
+        private static void ClearAlarmsFromDatabase(AppDbContext dbContext)
+        {
+            var alarms = dbContext.Alarms.ToList();
+            foreach (var alarm in alarms)
+            {
+                dbContext.Alarms.Remove(alarm);
+            }
             dbContext.SaveChanges();
         }
 

@@ -9,17 +9,29 @@ public class AlarmActivation
     public DateTime Timestamp { get; set; }
     public int AlarmId { get; set; }
     public Alarm? Alarm { get; set; }
+    
+    public int TagId { get; set; }
+    
+    public Tag? Tag { get; set; }
+    
+    public double Value { get; set; }
 
-    public AlarmActivation(int id, DateTime timestamp, int alarmId)
+    public AlarmActivation() {}
+
+    public AlarmActivation(int id, DateTime timestamp, int alarmId, int tagId, double value)
     {
         Id = id;
         Timestamp = timestamp;
         AlarmId = alarmId;
+        TagId = tagId;
+        Value = value;
     }
-    
-    public AlarmActivation(DateTime timestamp, int alarmId)
+
+    public AlarmActivation(DateTime timestamp, int alarmId, int tagId, double value)
     {
         Timestamp = timestamp;
         AlarmId = alarmId;
+        TagId = tagId;
+        Value = value;
     }
 }
