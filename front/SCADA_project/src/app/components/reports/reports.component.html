@@ -1,7 +1,7 @@
 <div class="reports-container">
-    <h2>Generate Report</h2>
+    <h2 (click)="refresh()">Generate Report</h2>
     
-    <div class="centered">
+    <div class="centered" *ngIf="showReportType">
         <div class="form-group">
             <label for="reportType">Report Type:</label>
             <select id="reportType" [(ngModel)]="selectedReportType" name="reportType" required>
@@ -15,7 +15,7 @@
         </div>
     </div>
 
-    <form class="compact-form" *ngIf="selectedReportType === 'alarms-timespan'">
+    <form class="compact-form" *ngIf="selectedReportType === 'alarms-timespan' && showFormR1">
         <div class="form-group">
             <label for="timeSortR1">Time Sort:</label>
             <select id="timeSortR1" [(ngModel)]="timeSortR1" name="timeSortR1">
@@ -62,116 +62,178 @@
           </tbody>
     </table>
 
-    <form class="compact-form" *ngIf="selectedReportType === 'alarms-priority'">
+    <form class="compact-form" *ngIf="selectedReportType === 'alarms-priority' && showFormR2">
         <div class="form-group">
-            <label for="sortOrder">Time Sort:</label>
-            <select id="sortOrder" [(ngModel)]="sortOrder" name="sortOrder">
+            <label for="timeSortR2">Time Sort:</label>
+            <select id="timeSortR2" [(ngModel)]="timeSortR2" name="timeSortR2">
                 <option value="Asc">Ascending</option>
                 <option value="Desc">Descending</option>
             </select>
         </div>
 
         <div class="form-group">
-            <label for="dateFrom">Date From:</label>
-            <input type="date" id="dateFrom" [(ngModel)]="dateFrom" name="dateFrom">
-        </div>
-
-        <div class="form-group">
-            <label for="dateTo">Date To:</label>
-            <input type="date" id="dateTo" [(ngModel)]="dateTo" name="dateTo">
+            <label for="alarmpriorityR2">Alarm Priority:</label>
+            <select id="alarmpriorityR2" [(ngModel)]="alarmpriorityR2" name="alarmpriorityR2">
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+            </select>
         </div>
 
         <button (click)="generateReport()">Generate Report</button>
     </form>
 
-    <form class="compact-form" *ngIf="selectedReportType === 'tag-values-timespan'">
+    <table class="reports-table" *ngIf="showDataR2 == true">
+        <thead>
+            <tr>
+              <th>Id</th>
+              <th>Timestamp</th>
+              <th>Alarm Id</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let alarm of report2Data">
+              <td>{{ alarm.id }}</td>
+              <td>{{ alarm.timestamp }}</td>
+              <td>{{ alarm.alarmId }}</td>
+            </tr>
+          </tbody>
+    </table>
+
+    <form class="compact-form" *ngIf="selectedReportType === 'tag-values-timespan' && showFormR3">
         <div class="form-group">
-            <label for="sortOrder">Time Sort:</label>
-            <select id="sortOrder" [(ngModel)]="sortOrder" name="sortOrder">
+            <label for="timeSortR3">Time Sort:</label>
+            <select id="timeSortR3" [(ngModel)]="timeSortR3" name="timeSortR3">
                 <option value="Asc">Ascending</option>
                 <option value="Desc">Descending</option>
             </select>
         </div>
 
         <div class="form-group">
-            <label for="dateFrom">Date From:</label>
-            <input type="date" id="dateFrom" [(ngModel)]="dateFrom" name="dateFrom">
+            <label for="fromTimeR3">From Time:</label>
+            <input type="datetime-local" id="fromTimeR3" [(ngModel)]="fromTimeR3" name="fromTimeR3">
         </div>
 
         <div class="form-group">
-            <label for="dateTo">Date To:</label>
-            <input type="date" id="dateTo" [(ngModel)]="dateTo" name="dateTo">
+            <label for="untilTimeR3">Until Time:</label>
+            <input type="datetime-local" id="untilTimeR3" [(ngModel)]="untilTimeR3" name="untilTimeR3">
         </div>
 
         <button (click)="generateReport()">Generate Report</button>
     </form>
 
-    <form class="compact-form" *ngIf="selectedReportType === 'last-values-analog-inputs'">
+    <table class="reports-table" *ngIf="showDataR3 == true">
+        <thead>
+            <tr>
+              <th>Id</th>
+              <th>Timestamp</th>
+              <th>Value</th>
+              <th>Tag Id</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let tag of report3Data">
+              <td>{{ tag.id }}</td>
+              <td>{{ tag.timestamp }}</td>
+              <td>{{ tag.value }}</td>
+              <td>{{ tag.tagId }}</td>
+            </tr>
+          </tbody>
+    </table>
+
+    <form class="compact-form" *ngIf="selectedReportType === 'last-values-analog-inputs' && showFormR4">
         <div class="form-group">
-            <label for="sortOrder">Time Sort:</label>
-            <select id="sortOrder" [(ngModel)]="sortOrder" name="sortOrder">
+            <label for="timeSortR4">Time Sort:</label>
+            <select id="timeSortR4" [(ngModel)]="timeSortR4" name="timeSortR4">
                 <option value="Asc">Ascending</option>
                 <option value="Desc">Descending</option>
             </select>
         </div>
 
-        <div class="form-group">
-            <label for="dateFrom">Date From:</label>
-            <input type="date" id="dateFrom" [(ngModel)]="dateFrom" name="dateFrom">
-        </div>
-
-        <div class="form-group">
-            <label for="dateTo">Date To:</label>
-            <input type="date" id="dateTo" [(ngModel)]="dateTo" name="dateTo">
-        </div>
-
         <button (click)="generateReport()">Generate Report</button>
     </form>
 
-    <form class="compact-form" *ngIf="selectedReportType === 'last-values-digital-inputs'">
+    <table class="reports-table" *ngIf="showDataR4 == true">
+        <thead>
+            <tr>
+              <th>Id</th>
+              <th>Timestamp</th>
+              <th>Value</th>
+              <th>Tag Id</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let tag of report4Data">
+              <td>{{ tag.id }}</td>
+              <td>{{ tag.timestamp }}</td>
+              <td>{{ tag.value }}</td>
+              <td>{{ tag.tagId }}</td>
+            </tr>
+          </tbody>
+    </table>
+
+    <form class="compact-form" *ngIf="selectedReportType === 'last-values-digital-inputs' && showFormR5">
         <div class="form-group">
-            <label for="sortOrder">Time Sort:</label>
-            <select id="sortOrder" [(ngModel)]="sortOrder" name="sortOrder">
+            <label for="timeSortR5">Time Sort:</label>
+            <select id="timeSortR5" [(ngModel)]="timeSortR5" name="timeSortR5">
                 <option value="Asc">Ascending</option>
                 <option value="Desc">Descending</option>
             </select>
         </div>
 
-        <div class="form-group">
-            <label for="dateFrom">Date From:</label>
-            <input type="date" id="dateFrom" [(ngModel)]="dateFrom" name="dateFrom">
-        </div>
-
-        <div class="form-group">
-            <label for="dateTo">Date To:</label>
-            <input type="date" id="dateTo" [(ngModel)]="dateTo" name="dateTo">
-        </div>
-
         <button (click)="generateReport()">Generate Report</button>
     </form>
 
-    <form class="compact-form" *ngIf="selectedReportType === 'tag-values'">
+    <table class="reports-table" *ngIf="showDataR5 == true">
+        <thead>
+            <tr>
+              <th>Id</th>
+              <th>Timestamp</th>
+              <th>Value</th>
+              <th>Tag Id</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let tag of report5Data">
+              <td>{{ tag.id }}</td>
+              <td>{{ tag.timestamp }}</td>
+              <td>{{ tag.value }}</td>
+              <td>{{ tag.tagId }}</td>
+            </tr>
+          </tbody>
+    </table>
+
+    <form class="compact-form" *ngIf="selectedReportType === 'tag-values' && showFormR6">
         <div class="form-group">
-            <label for="sortOrder">Time Sort:</label>
-            <select id="sortOrder" [(ngModel)]="sortOrder" name="sortOrder">
+            <label for="timeSortR6">Time Sort:</label>
+            <select id="timeSortR6" [(ngModel)]="timeSortR6" name="timeSortR6">
                 <option value="Asc">Ascending</option>
                 <option value="Desc">Descending</option>
             </select>
-        </div>
-
-        <div class="form-group">
-            <label for="dateFrom">Date From:</label>
-            <input type="date" id="dateFrom" [(ngModel)]="dateFrom" name="dateFrom">
-        </div>
-
-        <div class="form-group">
-            <label for="dateTo">Date To:</label>
-            <input type="date" id="dateTo" [(ngModel)]="dateTo" name="dateTo">
+            <label for="tagIdR6">Tag Id: </label>
+        <input type="number" id="tagIdR6" [(ngModel)]="tagIdR6" name="tagIdR6" required>
         </div>
 
         <button (click)="generateReport()">Generate Report</button>
     </form>
 
-
+    <table class="reports-table" *ngIf="showDataR6 == true">
+        <thead>
+            <tr>
+              <th>Id</th>
+              <th>Timestamp</th>
+              <th>Value</th>
+              <th>Tag Id</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let tag of report6Data">
+              <td>{{ tag.id }}</td>
+              <td>{{ tag.timestamp }}</td>
+              <td>{{ tag.value }}</td>
+              <td>{{ tag.tagId }}</td>
+            </tr>
+          </tbody>
+    </table>
     
 </div>

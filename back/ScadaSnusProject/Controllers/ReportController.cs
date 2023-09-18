@@ -17,10 +17,20 @@ public class ReportController : Controller
 
     [HttpGet]
     [Route("alarms-timespan")]
-    public ActionResult GetAllAlarmsInTimespan(TimeSortAndAlarmSortWithTimeSpanDTO dto)
+    public ActionResult GetAllAlarmsInTimespan([FromQuery] TimeSort timeSort,[FromQuery] AlarmSort alarmSort,[FromQuery] DateTime fromTime,[FromQuery] DateTime untilTime)
     {
+    
+        var dto = new TimeSortAndAlarmSortWithTimeSpanDTO
+        {
+            TimeSort = timeSort,
+            AlarmSort = alarmSort,
+            FromTime = fromTime,
+            UntilTime = untilTime
+        };
+    
         return Ok(_reportService.GetAllAlarmsInTimespan(dto));
     }
+
 
     [HttpGet]
     [Route("alarms-priority")]
