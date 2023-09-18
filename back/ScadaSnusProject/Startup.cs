@@ -55,7 +55,16 @@ namespace ScadaSnusProject
             //Hub
             services.AddSignalR();
 
-            
+            //CORS
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin", builder =>
+                {
+                    builder.WithOrigins("http://localhost:4200")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -75,6 +84,7 @@ namespace ScadaSnusProject
 
             app.UseRouting();
 
+            app.UseCors("AllowSpecificOrigin");
             // app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
