@@ -71,7 +71,7 @@
   display: block;
 }
 
-.tags-form input[type="text"] {
+.tags-form input, .tags-form select {
   width: 100%;
   padding: 5px;
   margin-bottom: 10px;

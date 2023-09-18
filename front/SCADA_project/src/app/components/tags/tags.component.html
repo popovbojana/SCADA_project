@@ -141,19 +141,19 @@
                 </div>
                 <div class="form-group">
                     <label for="newAInputValue">Value: </label>
-                    <input type="text" id="newAInputValue" [(ngModel)]="newAInputValue" name="newAInputValue" required>
+                    <input type="number" id="newAInputValue" [(ngModel)]="newAInputValue" name="newAInputValue" required>
                 </div>
                 <div class="form-group">
                     <label for="newAInputScanTime">Scan time: </label>
-                    <input type="text" id="newAInputScanTime" [(ngModel)]="newAInputScanTime" name="newAInputScanTime" required>
+                    <input type="number" id="newAInputScanTime" [(ngModel)]="newAInputScanTime" name="newAInputScanTime" required>
                 </div>
                 <div class="form-group">
                     <label for="newAInputLowLimit">Low limit: </label>
-                    <input type="text" id="newAInputLowLimit" [(ngModel)]="newAInputLowLimit" name="newAInputLowLimit" required>
+                    <input type="number" id="newAInputLowLimit" [(ngModel)]="newAInputLowLimit" name="newAInputLowLimit" required>
                 </div>
                 <div class="form-group">
                     <label for="newAInputHighLimit">High limit: </label>
-                    <input type="text" id="newAInputHighLimit" [(ngModel)]="newAInputHighLimit" name="newAInputHighLimit" required>
+                    <input type="number" id="newAInputHighLimit" [(ngModel)]="newAInputHighLimit" name="newAInputHighLimit" required>
                 </div>
                 <div class="form-group">
                     <label for="newAInputUnit">Unit: </label>
@@ -211,15 +211,15 @@
                 </div>
                 <div class="form-group">
                     <label for="newAOutputValue">Value: </label>
-                    <input type="text" id="newAOutputValue" [(ngModel)]="newAOutputValue" name="newAOutputValue" required>
+                    <input type="number" id="newAOutputValue" [(ngModel)]="newAOutputValue" name="newAOutputValue" required>
                 </div>
                 <div class="form-group">
                     <label for="newAOutputLowLimit">Low limit: </label>
-                    <input type="text" id="newAOutputLowLimit" [(ngModel)]="newAOutputLowLimit" name="newAOutputLowLimit" required>
+                    <input type="number" id="newAOutputLowLimit" [(ngModel)]="newAOutputLowLimit" name="newAOutputLowLimit" required>
                 </div>
                 <div class="form-group">
                     <label for="newAOutputHighLimit">High limit: </label>
-                    <input type="text" id="newAOutputHighLimit" [(ngModel)]="newAOutputHighLimit" name="newAOutputHighLimit" required>
+                    <input type="number" id="newAOutputHighLimit" [(ngModel)]="newAOutputHighLimit" name="newAOutputHighLimit" required>
                 </div>
                 <div class="form-group">
                     <label for="newAOutputUnit">Unit: </label>
@@ -280,11 +280,14 @@
                 </div>
                 <div class="form-group">
                     <label for="newDInputValue">Value: </label>
-                    <input type="text" id="newDInputValue" [(ngModel)]="newDInputValue" name="newDInputValue" required>
+                    <select id="newDInputValue" [(ngModel)]="newDInputValue" name="newDInputValue">
+                      <option value="0">0</option>
+                      <option value="1">1</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="newDInputScanTime">Scan time: </label>
-                    <input type="text" id="newDInputScanTime" [(ngModel)]="newDInputScanTime" name="newDInputScanTime" required>
+                    <input type="number" id="newDInputScanTime" [(ngModel)]="newDInputScanTime" name="newDInputScanTime" required>
                 </div>
                 <button (click)="addDigitalInput()">Save</button>
             </form>
@@ -332,7 +335,10 @@
                 </div>
                 <div class="form-group">
                     <label for="newDOutputValue">Value: </label>
-                    <input type="text" id="newDOutputValue" [(ngModel)]="newDOutputValue" name="newDOutputValue" required>
+                    <select id="newDOutputValue" [(ngModel)]="newDOutputValue" name="newDOutputValue">
+                      <option value="0">0</option>
+                      <option value="1">1</option>
+                    </select>
                 </div>
                 <button (click)="addDigitalOutput()">Save</button>
             </form>

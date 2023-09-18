@@ -120,3 +120,10 @@ export interface Tag{
   ioAddress: string,
   value: number
 }
+
+export interface TagValue{
+  id: number,
+  timestamp: string,
+  value: number,
+  tagId: number
+}

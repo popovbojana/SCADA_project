@@ -12,73 +12,73 @@ export class ReportService {
 
   getAllAlarmsInTimespan(dto: TimeSortAndAlarmSortWithTimeSpanDTO): Observable<any> {
     let params = new HttpParams()
-      .set('TimeSort', dto.TimeSort)
-      .set('AlarmSort', dto.AlarmSort)
-      .set('FromTime', dto.FromTime)
-      .set('UntilTime', dto.UntilTime);
+      .set('timeSort', dto.timeSort)
+      .set('alarmSort', dto.alarmSort)
+      .set('fromTime', dto.fromTime)
+      .set('untilTime', dto.untilTime);
 
-    return this.http.get('report/alarms-timespan', { params: params });
+    return this.http.get<any>(environment.apiHost +'report/alarms-timespan', { params: params });
   }
 
   getAllAlarmsOfPriority(dto: TimeSortAndAlarmPriorityDTO): Observable<any> {
     let params = new HttpParams()
-      .set('TimeSort', dto.TimeSort)
-      .set('AlarmSort', dto.AlarmPriority)
+      .set('timeSort', dto.timeSort)
+      .set('alarmSort', dto.alarmPriority)
 
-    return this.http.get('report/alarms-priority', { params: params });
+    return this.http.get<any>(environment.apiHost +'report/alarms-priority', { params: params });
   }
 
   getAllTagValuesInTimeSpan(dto: TimeSortWithTimeSpanDTO): Observable<any> {
     let params = new HttpParams()
-      .set('TimeSort', dto.TimeSort)
-      .set('FromTime', dto.FromTime)
-      .set('UntilTime', dto.UntilTime)
+      .set('timeSort', dto.timeSort)
+      .set('fromTime', dto.fromTime)
+      .set('untilTime', dto.untilTime)
 
-    return this.http.get('report/tag-values-timespan', { params: params });
+    return this.http.get<any>(environment.apiHost +'report/tag-values-timespan', { params: params });
   }
 
   getAllLastValuesForAnalogInputs(dto: TimeSortReportDTO): Observable<any> {
     let params = new HttpParams()
-      .set('TimeSort', dto.TimeSort)
+      .set('timeSort', dto.timeSort)
 
-    return this.http.get('report/last-values-analog-inputs', { params: params });
+    return this.http.get<any>(environment.apiHost +'report/last-values-analog-inputs', { params: params });
   }
 
 
   getAllLastValuesForDigitalInputs(dto: TimeSortReportDTO): Observable<any> {
     let params = new HttpParams()
-      .set('TimeSort', dto.TimeSort)
+      .set('timeSort', dto.timeSort)
 
-    return this.http.get('report/last-values-digital-inputs', { params: params });
+    return this.http.get<any>(environment.apiHost +'report/last-values-digital-inputs', { params: params });
   }
 
   getAllTagValuesForTag(tagId: number, dto: TimeSortReportDTO): Observable<any> {
     let params = new HttpParams()
-      .set('TimeSort', dto.TimeSort)
+      .set('timeSort', dto.timeSort)
 
-    return this.http.get('report/tag-values-' + tagId, { params: params });
+    return this.http.get<any>(environment.apiHost +'report/tag-values-' + tagId, { params: params });
   }
 
 }
 
 export interface TimeSortAndAlarmSortWithTimeSpanDTO{
-  TimeSort: string,
-  AlarmSort: string,
-  FromTime: string,
-  UntilTime: string
+  timeSort: string,
+  alarmSort: string,
+  fromTime: string,
+  untilTime: string
 }
 
 export interface TimeSortAndAlarmPriorityDTO{
-  TimeSort: string,
-  AlarmPriority: string
+  timeSort: string,
+  alarmPriority: string
 }
 
 export interface TimeSortWithTimeSpanDTO{
-  TimeSort: string,
-  FromTime: string,
-  UntilTime: string
+  timeSort: string,
+  fromTime: string,
+  untilTime: string
 }
 
 export interface TimeSortReportDTO{
-  TimeSort: string
+  timeSort: string
 }
