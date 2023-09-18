@@ -1,1 +1,345 @@
-<p>tags works!</p>
+<div class="tags-container">
+    <h2>{{ pageTitle }}</h2>
+    
+    <div class="options">
+      <button (click)="filterTags('all')">Show All</button>
+      <button (click)="filterTags('input')">Show All Inputs</button>
+      <button (click)="filterTags('output')">Show All Outputs</button>
+      <button (click)="filterTags('analog-input')">Show All Analog Inputs</button>
+      <button (click)="filterTags('analog-output')">Show All Analog Outputs</button>
+      <button (click)="filterTags('digital-input')">Show All Digital Inputs</button>
+      <button (click)="filterTags('digital-output')">Show All Digital Outputs</button>
+    </div>
+
+    <div *ngIf="filter === 'all'">
+        <table class="tags-table">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>IOAddress</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let tag of allTags">
+                <td>{{ tag.id }}</td>
+                <td>{{ tag.name }}</td>
+                <td>{{ tag.description }}</td>
+                <td>{{ tag.ioAddress }}</td>
+                <td>{{ tag.value }}</td>
+                <td><button (click)="deleteTag(tag.id)">Delete</button></td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+
+    <div *ngIf="filter === 'input'">
+        <table class="tags-table">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>IOAddress</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let tag of filteredTags">
+                <td>{{ tag.id }}</td>
+                <td>{{ tag.name }}</td>
+                <td>{{ tag.description }}</td>
+                <td>{{ tag.ioAddress }}</td>
+                <td>{{ tag.value }}</td>
+                <td>
+                    <button (click)="deleteTag(tag.id)">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+
+    <div *ngIf="filter === 'output'">
+        <table class="tags-table">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>IOAddress</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let tag of filteredTags">
+                <td>{{ tag.id }}</td>
+                <td>{{ tag.name }}</td>
+                <td>{{ tag.description }}</td>
+                <td>{{ tag.ioAddress }}</td>
+                <td>{{ tag.value }}</td>
+                <td><button (click)="deleteTag(tag.id)">Delete</button></td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+
+    <div *ngIf="filter === 'analog-input'">
+        <table class="tags-table">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>IOAddress</th>
+                <th>Value</th>
+                <th>Scan Time</th>
+                <th>Is Scan On</th>
+                <th>Low Limit</th>
+                <th>High Limit</th>
+                <th>Unit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let tag of analogInputs">
+                <td>{{ tag.id }}</td>
+                <td>{{ tag.name }}</td>
+                <td>{{ tag.description }}</td>
+                <td>{{ tag.ioAddress }}</td>
+                <td>{{ tag.value }}</td>
+                <td>{{ tag.scanTime }}</td>
+                <td *ngIf="tag.isScanOn === true">Yes</td>
+                <td *ngIf="tag.isScanOn === false">No</td>
+                <td>{{ tag.lowLimit }}</td>
+                <td>{{ tag.highLimit }}</td>
+                <td>{{ tag.unit }}</td>
+                <td>
+                    <button (click)="deleteTag(tag.id!)">Delete</button>
+                    <button *ngIf="tag.isScanOn === true" (click)="turnOffScan(tag.id!)">Turn Off Scan</button>
+                    <button *ngIf="tag.isScanOn === false" (click)="turnOnScan(tag.id!)">Turn On Scan</button>
+                </td>
+              </tr>
+            </tbody>
+        </table>
+        <button (click)="showAddAnalogInputForm=true">Add New</button>
+
+        <div *ngIf="showAddAnalogInputForm">
+            <h3>Add New Analog Input</h3>
+            <form>
+                <div class="form-group">
+                    <label for="newAInputName">Name: </label>
+                    <input type="text" id="newAInputName" [(ngModel)]="newAInputName" name="newAInputName" required>
+                </div>
+                <div class="form-group">
+                    <label for="newAInputDescription">Description</label>
+                    <input type="text" id="newAInputDescription" [(ngModel)]="newAInputDescription" name="newAInputDescription" required>
+                </div>
+                <div class="form-group">
+                    <label for="newAInputIOAddress">IOAddress: </label>
+                    <input type="text" id="newAInputIOAddress" [(ngModel)]="newAInputIOAddress" name="newAInputIOAddress" required>
+                </div>
+                <div class="form-group">
+                    <label for="newAInputValue">Value: </label>
+                    <input type="text" id="newAInputValue" [(ngModel)]="newAInputValue" name="newAInputValue" required>
+                </div>
+                <div class="form-group">
+                    <label for="newAInputScanTime">Scan time: </label>
+                    <input type="text" id="newAInputScanTime" [(ngModel)]="newAInputScanTime" name="newAInputScanTime" required>
+                </div>
+                <div class="form-group">
+                    <label for="newAInputLowLimit">Low limit: </label>
+                    <input type="text" id="newAInputLowLimit" [(ngModel)]="newAInputLowLimit" name="newAInputLowLimit" required>
+                </div>
+                <div class="form-group">
+                    <label for="newAInputHighLimit">High limit: </label>
+                    <input type="text" id="newAInputHighLimit" [(ngModel)]="newAInputHighLimit" name="newAInputHighLimit" required>
+                </div>
+                <div class="form-group">
+                    <label for="newAInputUnit">Unit: </label>
+                    <input type="text" id="newAInputUnit" [(ngModel)]="newAInputUnit" name="newAInputUnit" required>
+                </div>
+                <button (click)="addAnalogInput()">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <div *ngIf="filter === 'analog-output'">
+        <table class="tags-table">
+            <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>IOAddress</th>
+                  <th>Value</th>
+                  <th>Low Limit</th>
+                  <th>High Limit</th>
+                  <th>Unit</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let tag of analogOutputs">
+                  <td>{{ tag.id }}</td>
+                  <td>{{ tag.name }}</td>
+                  <td>{{ tag.description }}</td>
+                  <td>{{ tag.ioAddress }}</td>
+                  <td>{{ tag.value }}</td>
+                  <td>{{ tag.lowLimit }}</td>
+                  <td>{{ tag.highLimit }}</td>
+                  <td>{{ tag.unit }}</td>
+                  <td><button (click)="deleteTag(tag.id!)">Delete</button></td>
+                </tr>
+              </tbody>
+          </table>
+          <button (click)="showAddAnalogOutputForm = true">Add New</button>
+
+          <div *ngIf="showAddAnalogOutputForm">
+            <h3>Add Analog Output</h3>
+            <form>
+                <div class="form-group">
+                    <label for="newAOutputName">Name: </label>
+                    <input type="text" id="newAOutputName" [(ngModel)]="newAOutputName" name="newAOutputName" required>
+                </div>
+                <div class="form-group">
+                    <label for="newAOutputDescription">Description</label>
+                    <input type="text" id="newAOutputDescription" [(ngModel)]="newAOutputDescription" name="newAOutputDescription" required>
+                </div>
+                <div class="form-group">
+                    <label for="newAOutputIOAddress">IOAddress: </label>
+                    <input type="text" id="newAOutputIOAddress" [(ngModel)]="newAOutputIOAddress" name="newAOutputIOAddress" required>
+                </div>
+                <div class="form-group">
+                    <label for="newAOutputValue">Value: </label>
+                    <input type="text" id="newAOutputValue" [(ngModel)]="newAOutputValue" name="newAOutputValue" required>
+                </div>
+                <div class="form-group">
+                    <label for="newAOutputLowLimit">Low limit: </label>
+                    <input type="text" id="newAOutputLowLimit" [(ngModel)]="newAOutputLowLimit" name="newAOutputLowLimit" required>
+                </div>
+                <div class="form-group">
+                    <label for="newAOutputHighLimit">High limit: </label>
+                    <input type="text" id="newAOutputHighLimit" [(ngModel)]="newAOutputHighLimit" name="newAOutputHighLimit" required>
+                </div>
+                <div class="form-group">
+                    <label for="newAOutputUnit">Unit: </label>
+                    <input type="text" id="newAOutputUnit" [(ngModel)]="newAOutputUnit" name="newAOutputUnit" required>
+                </div>
+                <button (click)="addAnalogOutput()">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <div *ngIf="filter === 'digital-input'">
+        <table class="tags-table">
+            <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>IOAddress</th>
+                  <th>Value</th>
+                  <th>Scan Time</th>
+                  <th>Is Scan On</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let tag of digitalInputs">
+                  <td>{{ tag.id }}</td>
+                  <td>{{ tag.name }}</td>
+                  <td>{{ tag.description }}</td>
+                  <td>{{ tag.ioAddress }}</td>
+                  <td>{{ tag.value }}</td>
+                  <td>{{ tag.scanTime }}</td>
+                  <td *ngIf="tag.isScanOn === true">Yes</td>
+                  <td *ngIf="tag.isScanOn === false">No</td>
+                  <td>
+                    <button (click)="deleteTag(tag.id!)">Delete</button>
+                    <button *ngIf="tag.isScanOn === true" (click)="turnOffScan(tag.id!)">Turn Off Scan</button>
+                    <button *ngIf="tag.isScanOn === false" (click)="turnOnScan(tag.id!)">Turn On Scan</button>
+                </td>
+                </tr>
+              </tbody>
+          </table>
+          <button (click)="showAddDigitalInputForm = true">Add New</button>
+
+          <div *ngIf="showAddDigitalInputForm">
+            <h3>Add New Digital Input</h3>
+            <form>
+                <div class="form-group">
+                    <label for="newDInputName">Name: </label>
+                    <input type="text" id="newDInputName" [(ngModel)]="newDInputName" name="newDInputName" required>
+                </div>
+                <div class="form-group">
+                    <label for="newDInputDescription">Description</label>
+                    <input type="text" id="newDInputDescription" [(ngModel)]="newDInputDescription" name="newDInputDescription" required>
+                </div>
+                <div class="form-group">
+                    <label for="newDInputIOAddress">IOAddress: </label>
+                    <input type="text" id="newDInputIOAddress" [(ngModel)]="newDInputIOAddress" name="newDInputIOAddress" required>
+                </div>
+                <div class="form-group">
+                    <label for="newDInputValue">Value: </label>
+                    <input type="text" id="newDInputValue" [(ngModel)]="newDInputValue" name="newDInputValue" required>
+                </div>
+                <div class="form-group">
+                    <label for="newDInputScanTime">Scan time: </label>
+                    <input type="text" id="newDInputScanTime" [(ngModel)]="newDInputScanTime" name="newDInputScanTime" required>
+                </div>
+                <button (click)="addDigitalInput()">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <div *ngIf="filter === 'digital-output'">
+        <table class="tags-table">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>IOAddress</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let tag of digitalOutputs">
+                <td>{{ tag.id }}</td>
+                <td>{{ tag.name }}</td>
+                <td>{{ tag.description }}</td>
+                <td>{{ tag.ioAddress }}</td>
+                <td>{{ tag.value }}</td>
+                <td><button (click)="deleteTag(tag.id!)">Delete</button></td>
+              </tr>
+            </tbody>
+          </table>
+          <button (click)="showAddDigitalOutputForm = true">Add New</button>
+
+          <div *ngIf="showAddDigitalOutputForm">
+            <h3>Add New Digital Output</h3>
+            <form>
+                <div class="form-group">
+                    <label for="newDOutputName">Name: </label>
+                    <input type="text" id="newDOutputName" [(ngModel)]="newDOutputName" name="newDOutputName" required>
+                </div>
+                <div class="form-group">
+                    <label for="newDOutputDescription">Description</label>
+                    <input type="text" id="newDOutputDescription" [(ngModel)]="newDOutputDescription" name="newDOutputDescription" required>
+                </div>
+                <div class="form-group">
+                    <label for="newDOutputIOAddress">IOAddress: </label>
+                    <input type="text" id="newDOutputIOAddress" [(ngModel)]="newDOutputIOAddress" name="newDOutputIOAddress" required>
+                </div>
+                <div class="form-group">
+                    <label for="newDOutputValue">Value: </label>
+                    <input type="text" id="newDOutputValue" [(ngModel)]="newDOutputValue" name="newDOutputValue" required>
+                </div>
+                <button (click)="addDigitalOutput()">Save</button>
+            </form>
+        </div>
+    </div>
+    
+  
+    
+  </div>
+  

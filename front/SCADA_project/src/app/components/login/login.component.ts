@@ -11,10 +11,7 @@ export class LoginComponent {
   username: string = '';
   password: string = '';
 
-  constructor(private userService: UserService,
-    private router: Router) {
-
-}
+  constructor(private userService: UserService,private router: Router) { }
 
   login() {
     const userCredentials: LoginCredentialsDTO = {

@@ -24,9 +24,9 @@ export class AlarmService {
 }
 
 export interface Alarm{
-  id?: number,
-  value: number,
-  tagId: number,
-  type: string,
-  priority: string
+  Id?: number,
+  Value: number,
+  TagId: number,
+  Type: string,
+  Priority: string
 }

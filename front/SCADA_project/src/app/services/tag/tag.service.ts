@@ -75,7 +75,7 @@ export interface AnalogInput{
   id?: number,
   name: string,
   description: string,
-  ioaddress: string,
+  ioAddress: string,
   value: number,
   scanTime: number,
   isScanOn: boolean,
@@ -88,17 +88,18 @@ export interface AnalogOutput{
   id?: number,
   name: string,
   description: string,
-  ioaddress: string,
+  ioAddress: string,
   value: number,
   lowLimit: number,
   highLimit: number
+  unit: string
 }
 
 export interface DigitalInput{
   id?: number,
   name: string,
   description: string,
-  ioaddress: string,
+  ioAddress: string,
   value: number,
   scanTime: number,
   isScanOn: boolean
@@ -108,7 +109,7 @@ export interface DigitalOutput{
   id?: number,
   name: string,
   description: string,
-  ioaddress: string,
+  ioAddress: string,
   value: number
 }
 
@@ -116,6 +117,6 @@ export interface Tag{
   id: number,
   name: string,
   description: string,
-  ioaddress: string,
+  ioAddress: string,
   value: number
 }
