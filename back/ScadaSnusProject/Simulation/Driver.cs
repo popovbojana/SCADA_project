@@ -4,6 +4,10 @@ public class Driver
 {
     public static double ReturnValue(string address)
     {
+        // U ovoj implementaciji simulacionog driver-a adrese su opisne (po uzoru na iFIX)
+        // S - sine
+        // C - cosine
+        // R - ramp
         if (address == "S") return Sine();
         else if (address == "C") return Cosine();
         else if (address == "R") return Ramp();
@@ -24,4 +28,5 @@ public class Driver
     {
         return 100 * DateTime.Now.Second / 60;
     }
+
 }
