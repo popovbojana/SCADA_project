@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -54,6 +55,7 @@ namespace ScadaSnusProject
             
             //Hub
             services.AddSignalR();
+            services.AddSingleton<TagHub>();
             
             // Inside the ConfigureServices method of Startup.cs
             services.AddSignalR(options =>
@@ -101,6 +103,7 @@ namespace ScadaSnusProject
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHub<AlarmHub>("/alarmHub");
+                endpoints.MapHub<TagHub>("/tagValuesHub");
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
                 endpoints.MapFallbackToFile("index.html");

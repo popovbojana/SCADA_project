@@ -4107,26 +4107,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\filip\\.nuget\\packages\\": {}
+    "C:\\Users\\Svetozar\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\filip\\Documents\\GitHub\\SCADA_project\\back\\ScadaSnusProject\\ScadaSnusProject.csproj",
+      "projectUniqueName": "D:\\snus\\SCADA_project\\back\\ScadaSnusProject\\ScadaSnusProject.csproj",
       "projectName": "ScadaSnusProject",
-      "projectPath": "C:\\Users\\filip\\Documents\\GitHub\\SCADA_project\\back\\ScadaSnusProject\\ScadaSnusProject.csproj",
-      "packagesPath": "C:\\Users\\filip\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\filip\\Documents\\GitHub\\SCADA_project\\back\\ScadaSnusProject\\obj\\",
+      "projectPath": "D:\\snus\\SCADA_project\\back\\ScadaSnusProject\\ScadaSnusProject.csproj",
+      "packagesPath": "C:\\Users\\Svetozar\\.nuget\\packages\\",
+      "outputPath": "D:\\snus\\SCADA_project\\back\\ScadaSnusProject\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\filip\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\Svetozar\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

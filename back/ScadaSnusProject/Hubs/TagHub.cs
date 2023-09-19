@@ -3,10 +3,12 @@ using ScadaSnusProject.Model;
 
 namespace ScadaSnusProject.Hubs;
 
-public class TagHub : Hub
-{
+public class TagHub : Hub<ITagValueClient>{
+    public TagHub() { }
     public async Task SendTagValue(TagValue tagValue)
-    {
-        await Clients.All.SendAsync("ReceiveTagValue", tagValue);
-    }   
+        {
+            await Clients.All.SendTagValue(tagValue);
+        }   
+
+    
 }

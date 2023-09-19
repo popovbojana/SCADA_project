@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpTransportType, HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { Observable } from 'rxjs';
 import { environment } from 'src/enviroments/environment';
 
@@ -7,8 +8,25 @@ import { environment } from 'src/enviroments/environment';
   providedIn: 'root'
 })
 export class TagService {
+  private hubConnection: HubConnection;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { 
+    this.hubConnection = new HubConnectionBuilder()
+      .withUrl("https://localhost:7031/tagValuesHub", {skipNegotiation:true, transport: HttpTransportType.WebSockets})
+      .build();
+  }
+
+  startConnection() {
+    return this.hubConnection.start();
+  }
+
+  stopConnection() {
+    return this.hubConnection.stop();
+  }
+
+  getHubConnection() {
+    return this.hubConnection;
+  }
 
   addAnalogInput(aInput: AnalogInput): Observable<any> {
     return this.http.post<any>(environment.apiHost + 'tag/add-analog-input', aInput);
