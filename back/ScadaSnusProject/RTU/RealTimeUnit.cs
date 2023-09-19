@@ -57,11 +57,10 @@ public class RealTimeUnit : BackgroundService
         {
             int randomValue = _random.Next(2);
             var tagValue = new TagValue(DateTime.Now, randomValue, digitalInput.Id);
-            
+            _tagRepository.UpdateTagValue(digitalInput.Id, randomValue);
+            _tagRepository.AddNewTagValue(tagValue);
             _logger.LogInformation($"Digital input value: TagId:{tagValue.TagId}, ScanTime: {digitalInput.ScanTime}, TimeStamp: {tagValue.Timestamp}, Value: {tagValue.Value}");
-            
             await _alarmHub.Clients.All.SendAsync("ReceiveTagValue", tagValue);
-
             await Task.Delay(TimeSpan.FromSeconds(digitalInput.ScanTime), cancellationToken);
         }
     }
@@ -74,9 +73,9 @@ public class RealTimeUnit : BackgroundService
             double maxValue = analogInput.HighLimit + 50;
             double randomValue = minValue + (_random.NextDouble() * (maxValue - minValue));
             var tagValue = new TagValue(DateTime.Now, randomValue, analogInput.Id);
-
+            _tagRepository.UpdateTagValue(analogInput.Id, randomValue);
+            _tagRepository.AddNewTagValue(tagValue);
             _logger.LogInformation($"Analog input value: TagId:{tagValue.TagId}, ScanTime: {analogInput.ScanTime}, TimeStamp: {tagValue.Timestamp}, Value: {tagValue.Value}");
-
             ICollection<Alarm> alarms = _alarmRepository.GetAllAlarmsForInput(analogInput.Id);
             List<Alarm> listAlarms = alarms.ToList();
 
