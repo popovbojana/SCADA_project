@@ -52,8 +52,6 @@ public class RealTimeUnit : BackgroundService
             var generateDigitalValuesTasks = digitalInputs.Select(input => GenerateDigitalValuesAsync(input, stoppingToken));
             var generateAnalogValuesTasks = analogInputs.Select(input => GenerateAnalogValuesAsync(input, stoppingToken));
 
-            await SendTagValueToClients(new TagValue(DateTime.Now, 123, 1));
-            // await _tagHub.Clients.All.SendAsync("SendTagValue", "probaaa");
             await Task.WhenAll(generateDigitalValuesTasks.Concat(generateAnalogValuesTasks));
         }
 
@@ -75,10 +73,9 @@ public class RealTimeUnit : BackgroundService
             _tagRepository.UpdateTagValue(digitalInput.Id, randomValue);
             _tagRepository.AddNewTagValue(tagValue);
             _logger.LogInformation($"Digital input value: TagId:{tagValue.TagId}, ScanTime: {digitalInput.ScanTime}, TimeStamp: {tagValue.Timestamp}, Value: {tagValue.Value}");
-            // await _alarmHub.Clients.All.SendAsync("ReceiveTagValue", tagValue);
-            // await _tagHub.Clients.All.SendAsync("SendTagValue", tagValue);
+
             await SendTagValueToClients(tagValue);
-            await Task.Delay(TimeSpan.FromSeconds(digitalInput.ScanTime * 1000), cancellationToken);
+            await Task.Delay(TimeSpan.FromSeconds(digitalInput.ScanTime), cancellationToken);
         }
     }
 
@@ -101,10 +98,8 @@ public class RealTimeUnit : BackgroundService
                 ActivateAlarm(analogInput, randomValue, DateTime.Now, listAlarms);
             }
 
-            // await _alarmHub.Clients.All.SendAsync("ReceiveTagValue", tagValue);
-            // await _tagHub.Clients.All.SendAsync("SendTagValue", tagValue);
             await SendTagValueToClients(tagValue);
-            await Task.Delay(TimeSpan.FromSeconds(analogInput.ScanTime * 1000), cancellationToken);
+            await Task.Delay(TimeSpan.FromSeconds(analogInput.ScanTime), cancellationToken);
         }
     }
     

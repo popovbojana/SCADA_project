@@ -1,19 +1,23 @@
 <div class="tag-values-container">
-    <h2>Tag Values</h2>
+    <h2>Trending</h2>
     <table class="tag-values-table">
       <thead>
         <tr>
-          <th>Tag ID</th>
-          <th>Timestamp</th>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Description</th>
+          <th>IOAddress</th>
           <th>Value</th>
         </tr>
       </thead>
       <tbody>
-        <!-- <tr *ngFor="let tagValue of tagValues">
-          <td>{{ tagValue.tagId }}</td>
-          <td>{{ tagValue.timestamp }}</td>
-          <td>{{ tagValue.value }}</td>
-        </tr> -->
+        <tr *ngFor="let tag of tags">
+          <td>{{ tag.id }}</td>
+          <td>{{ tag.name }}</td>
+          <td>{{ tag.description }}</td>
+          <td>{{ tag.ioAddress }}</td>
+          <td>{{ tag.value }}</td>
+        </tr>
       </tbody>
     </table>
   </div>

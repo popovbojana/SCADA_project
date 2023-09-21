@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
-import { TagService } from 'src/app/services/tag/tag.service';
+import { Tag, TagService } from 'src/app/services/tag/tag.service';
 
 @Component({
   selector: 'app-trending',
@@ -8,7 +8,7 @@ import { TagService } from 'src/app/services/tag/tag.service';
   styleUrls: ['./trending.component.css']
 })
 export class TrendingComponent implements OnInit {
-  tags: any[] = [];
+  tags: Tag[] = [];
 
   constructor( private tagService: TagService){
     this.connectHub();
